@@ -1,15 +1,16 @@
-import Link from "next/link"
+import Link from 'next/link'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+  CardTitle
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import loginAuth from './_actions/loginAuth'
 
 export default function Login() {
   return (
@@ -22,32 +23,49 @@ export default function Login() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label className="text-zinc-50" htmlFor="email">Email</Label>
-              <Input
-                className="border-zinc-700 text-zinc-300"
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label className="text-zinc-50 " htmlFor="password">Password</Label>
-                <Link href="#" className="text-muted-foreground ml-auto inline-block text-xs underline">
-                  Esqueceu sua senha?
-                </Link>
+          <form action={loginAuth}>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label className="text-zinc-50" htmlFor="email">
+                  Email
+                </Label>
+                <Input
+                  className="border-zinc-700 text-zinc-300"
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  required
+                />
               </div>
-              <Input className="border-zinc-700 text-zinc-300" placeholder="Senha" id="password" type="password" required />
+              <div className="grid gap-2">
+                <div className="flex">
+                  <Label className="text-zinc-50 " htmlFor="password">
+                    Password
+                  </Label>
+                  <Link
+                    href="#"
+                    className="text-muted-foreground ml-auto inline-block text-xs underline"
+                  >
+                    Esqueceu sua senha?
+                  </Link>
+                </div>
+                <Input
+                  className="bord  er-zinc-700 text-zinc-300"
+                  placeholder="Senha"
+                  id="password"
+                  name='password'
+                  type="password"
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full mt-5">
+                Login
+              </Button>
             </div>
-            <Button type="submit" className="w-full mt-5">
-              Login
-            </Button>
-          </div>
+          </form>
           <div className="mt-4 text-center text-sm text-zinc-50">
-            Não possue conta?{" "}
+            Não possue conta?{' '}
             <Link href="/register" className="underline">
               Cadastre-se
             </Link>

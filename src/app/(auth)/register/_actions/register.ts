@@ -27,5 +27,5 @@ export default async function (formData : FormData){
     },
   })
 
-  redirect("/dashboard")
+  redirect("/login")
 }
