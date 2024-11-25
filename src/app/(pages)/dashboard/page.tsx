@@ -9,9 +9,10 @@ export default async function Dashboard (){
   }
 
   return (
-    <div className="dark bg-background">
-      <h1>Dashboard</h1>
-      <p>Welcome to the dashboard!</p>
+    <div className='h-[95vh] bg-background px-20 pt-5'>
+      <h1 className='text-xl font-bold pb-4'>Informações sobre usuário</h1>
+      <p className='text-zinc-100'>Nome: {session.user?.name}</p>
+      <p>Email: {session.user?.email}</p>
     </div>
   )
 }

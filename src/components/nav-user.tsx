@@ -1,4 +1,5 @@
 'use client'
+
 import {
   BadgeCheck,
   Bell,
@@ -31,17 +32,16 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-import { auth } from "@/../../auth"
+import { auth, signOut } from "@/../../auth"
 import { getServerSideProps } from "@/app/(pages)/getServerSideProps"
 import { useEffect, useState } from "react"
 import { Session } from "next-auth"
+import Logout from "@/app/(auth)/_actions/logout"
+import { Button } from "./ui/button"
 
 export function NavUser() {
-  // const { isMobile } = useSidebar()
-  // const session = await auth()
-  // const getSession = getServerSideProps()
-  
   const [session, setSession] = useState<Session | null>(null)
+
   //use effect para usar a função getServerSideProps
   useEffect(() => {
     async function fetchServerSideProps() {
@@ -51,7 +51,6 @@ export function NavUser() {
     fetchServerSideProps()
   }, [])
 
-  // const session = NavUserServer()
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -113,10 +112,9 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
-              Log out
-            </DropdownMenuItem>
+            <form action={Logout}>
+              <Button className="w-full">Sair</Button>
+            </form>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

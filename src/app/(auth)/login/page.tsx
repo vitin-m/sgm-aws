@@ -14,8 +14,8 @@ import loginAuth from './_actions/loginAuth'
 
 export default function Login() {
   return (
-    <div className="bg-zinc-950 h-screen flex items-center justify-center">
-      <Card className="mx-auto max-w-sm bg-zinc-950 border-zinc-700">
+    <div className="bg-background h-screen flex items-center justify-center">
+      <Card className="mx-auto max-w-sm bg-background border-primary">
         <CardHeader>
           <CardTitle className="text-3xl text-zinc-50">Login</CardTitle>
           <CardDescription>
