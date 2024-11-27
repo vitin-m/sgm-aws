@@ -20,6 +20,6 @@ export default async function LoginAction (fromData : FormData) {
     }
   }
   
-  redirect('/dashboard');
+  redirect('/home');
   
 }

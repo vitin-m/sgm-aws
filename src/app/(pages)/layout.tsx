@@ -1,5 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import { UserProvider } from "../contexts/context-user"
  
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

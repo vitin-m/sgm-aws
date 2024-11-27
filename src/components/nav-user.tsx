@@ -33,21 +33,24 @@ import {
 } from "@/components/ui/sidebar"
 
 import { auth, signOut } from "@/../../auth"
-import { getServerSideProps } from "@/app/(pages)/getServerSideProps"
+import { getServerSideProps } from "@/app/contexts/getServerSideProps"
 import { useEffect, useState } from "react"
 import { Session } from "next-auth"
 import Logout from "@/app/(auth)/_actions/logout"
 import { Button } from "./ui/button"
+import Link from "next/link"
 
 export function NavUser() {
   const [session, setSession] = useState<Session | null>(null)
-
+  
   //use effect para usar a função getServerSideProps
   useEffect(() => {
     async function fetchServerSideProps() {
       const getSession = await getServerSideProps()
       setSession(getSession.session)
     }
+
+    console.log(session?.user.avatar)
     fetchServerSideProps()
   }, [])
 
@@ -61,7 +64,7 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                {/* <AvatarImage src={session?.user?.image || ''} alt={session?.user?.name || ''} /> */}
+                <AvatarImage src={session?.user.avatar || ''} alt={session?.user.avatar || ''} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -80,7 +83,7 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  {/* <AvatarImage src={session?.user?.image || ''} alt={session?.user?.name || ''} /> */}
+                  <AvatarImage src={session?.user?.avatar || ''} alt={session?.user.avatar || ''} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -98,10 +101,12 @@ export function NavUser() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
+              <Link href="/dashboard">
+                <DropdownMenuItem>
+                  <BadgeCheck />
+                  Dashboard
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem>
                 <CreditCard />
                 Billing

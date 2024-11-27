@@ -11,6 +11,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import loginAuth from './_actions/loginAuth'
+import { Suspense } from 'react'
+import Loading from './loading'
 
 export default function Login() {
   return (
@@ -59,9 +61,11 @@ export default function Login() {
                   required
                 />
               </div>
-              <Button type="submit" className="w-full mt-5">
-                Login
-              </Button>
+              <Suspense fallback={<Loading />}>
+                <Button type="submit" className="w-full mt-5">
+                  Login
+                </Button>
+              </Suspense>
             </div>
           </form>
           <div className="mt-4 text-center text-sm text-zinc-50">
