@@ -6,14 +6,10 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
-  Sparkles,
-} from "lucide-react"
+  Sparkles
+} from 'lucide-react'
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import {
   DropdownMenu,
@@ -22,27 +18,27 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar"
+  useSidebar
+} from '@/components/ui/sidebar'
 
-import { auth, signOut } from "@/../../auth"
-import { getServerSideProps } from "@/app/contexts/getServerSideProps"
-import { useEffect, useState } from "react"
-import { Session } from "next-auth"
-import Logout from "@/app/(auth)/_actions/logout"
-import { Button } from "./ui/button"
-import Link from "next/link"
+import { auth, signOut } from '@/../../auth'
+import { getServerSideProps } from '@/app/contexts/getServerSideProps'
+import { Suspense, useEffect, useState } from 'react'
+import { Session } from 'next-auth'
+import Logout from '@/app/(auth)/_actions/logout'
+import { Button } from './ui/button'
+import Link from 'next/link'
 
 export function NavUser() {
   const [session, setSession] = useState<Session | null>(null)
-  
+
   //use effect para usar a função getServerSideProps
   useEffect(() => {
     async function fetchServerSideProps() {
@@ -64,11 +60,16 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={session?.user.avatar || ''} alt={session?.user.avatar || ''} />
+                <AvatarImage
+                  src={session?.user.avatar || ''}
+                  alt={session?.user.avatar || ''}
+                />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{ session?.user?.name}</span>
+                <span className="truncate font-semibold">
+                  {session?.user?.name}
+                </span>
                 <span className="truncate text-xs">{session?.user?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -80,19 +81,6 @@ export function NavUser() {
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={session?.user?.avatar || ''} alt={session?.user.avatar || ''} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{session?.user?.name}</span>
-                  <span className="truncate text-xs">{ session?.user?.email}</span>
-                </div>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Sparkles />
@@ -104,7 +92,7 @@ export function NavUser() {
               <Link href="/dashboard">
                 <DropdownMenuItem>
                   <BadgeCheck />
-                  Dashboard
+                  Dados usuário
                 </DropdownMenuItem>
               </Link>
               <DropdownMenuItem>

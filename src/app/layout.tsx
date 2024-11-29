@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { BackgroundLines } from "@/components/ui/background-lines";
+import NextProgress from "nextjs-progressbar"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

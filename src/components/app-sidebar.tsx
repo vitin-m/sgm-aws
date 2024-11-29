@@ -18,6 +18,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { NavMain } from "./nav-main"
+import { BackgroundLines } from "./ui/background-lines";
 
 // This is sample data.
 const data = {
@@ -94,17 +95,18 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <NavUser />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
-      </SidebarContent>
-
-      <div className="flex justify-center items-center p-2 m-1 mb-2 rounded-xl bg-secondary border-[240 3.7% 15.9%]">
-        <FaAws size={30}/>
-      </div>
-    </Sidebar>
+    <div className="z-10">
+      <Sidebar collapsible="icon"  {...props}>
+        <SidebarHeader>
+          <NavUser />
+        </SidebarHeader>
+        <SidebarContent>
+          <NavMain items={data.navMain} />
+        </SidebarContent>
+        <div className="flex justify-center items-center p-2 m-1 mb-2 rounded-xl bg-secondary border-[240 3.7% 15.9%]">
+          <FaAws size={30}/>
+        </div>
+      </Sidebar>
+    </div>
   )
 }
