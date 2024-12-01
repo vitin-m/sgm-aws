@@ -1,7 +1,7 @@
 from typing import Annotated, Generator
 
 from app.core import engine, security, settings
-from app.core.models import TokenPayload, UserInDB
+from app.core.models import TokenPayload, User
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jwt import InvalidTokenError
@@ -20,13 +20,13 @@ SessionDep = Annotated[Session, Depends(get_db)]
 TokenDep = Annotated[str, Depends(oauth2)]
 
 
-def get_current_user(session: SessionDep, token: TokenDep) -> UserInDB:
+def get_current_user(session: SessionDep, token: TokenDep) -> User:
     try:
         token_data = TokenPayload(**security.decode_token(token))
     except (InvalidTokenError, ValidationError):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
 
-    user = session.get(UserInDB, token_data.sub)
+    user = session.get(User, token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
