@@ -66,40 +66,40 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
 <table>
   <tr>
     <td align="center">
-      <a href="#" title="defina o título do link">
-        <img src="https://avatars.githubusercontent.com/u/62776981?v=4.jpg" width="100px;" alt="Foto do Iuri Silva no GitHub"/><br>
+      <a href="#" title="Joao Vitor">
+        <img src="https://avatars.githubusercontent.com/u/62776981?v=4.jpg" width="100px;" alt="Joao Vitor"/><br>
         <sub>
           <b>João Vitor</b>
         </sub>
       </a>
     </td>
     <td align="center">
-      <a href="#" title="defina o título do link">
-        <img src="https://avatars.githubusercontent.com/u/54125157?v=4.jpg" width="100px;" alt="Foto do Mark Zuckerberg"/><br>
+      <a href="#" title="Vito Melo">
+        <img src="https://avatars.githubusercontent.com/u/54125157?v=4.jpg" width="100px;" alt="Vito Melo"/><br>
         <sub>
           <b>Vitor Melo</b>
         </sub>
       </a>
     </td>
     <td align="center">
-      <a href="#" title="defina o título do link">
-        <img src="https://avatars.githubusercontent.com/u/25374544?v=4.jpg" width="100px;" alt="Foto do Steve Jobs"/><br>
+      <a href="#" title="Paulo Eduardo">
+        <img src="https://avatars.githubusercontent.com/u/25374544?v=4.jpg" width="100px;" alt="Paulo Eduardo"/><br>
         <sub>
           <b>Paulo Eduardo</b>
         </sub>
       </a>
     </td>
      <td align="center">
-      <a href="#" title="defina o título do link">
-        <img src="https://avatars.githubusercontent.com/u/43191511?v=4.jpg" width="100px;" alt="Foto do Steve Jobs"/><br>
+      <a href="#" title="Lucas Matheus">
+        <img src="https://avatars.githubusercontent.com/u/43191511?v=4.jpg" width="100px;" alt="Lucas Matheus"/><br>
         <sub>
           <b>Lucas Matheus</b>
         </sub>
       </a>
     </td>
      <td align="center">
-      <a href="#" title="defina o título do link">
-        <img src="https://avatars.githubusercontent.com/u/96149641?v=4.jpg" width="100px;" alt="Foto do Steve Jobs"/><br>
+      <a href="#" title="Cayo Cesar">
+        <img src="https://avatars.githubusercontent.com/u/96149641?v=4.jpg" width="100px;" alt="Cayo Cesar"/><br>
         <sub>
           <b>Cayo Cesar</b>
         </sub>
@@ -107,3 +107,22 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
     </td>
   </tr>
 </table>
+
+## 🤝 Orientador
+
+Agradecimentos ao orientador do projeto.
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="#" title="Armando Soares">
+        <img src="https://avatars.githubusercontent.com/u/328464?v=4" width="100px;" alt="Armando Soares"/><br>
+        <sub>
+          <b>Armando Soares</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+
