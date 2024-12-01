@@ -13,7 +13,9 @@ dependencies = [
     "pyjwt>=2.10.0",
     "sqlmodel>=0.0.22",
     "tenacity>=9.0.0",
+    "sqlalchemy>=1.4.0",
 ]
+
 
 [dependency-groups]
 dev = []

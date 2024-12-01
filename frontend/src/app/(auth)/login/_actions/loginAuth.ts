@@ -1,25 +1,31 @@
-'use server'
+"use server";
 
-import { signIn } from '@/../../auth';
-import { AuthError } from 'next-auth';
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
-export default async function LoginAction (fromData : FormData) {
+import axiosInstance from "../../../../lib/axios";
+
+export default async function LoginAction(fromData: FormData) {
+  console.log("Login Action", fromData);
   const { email, password } = Object.fromEntries(fromData.entries());
-  
-  try {
-    await signIn('credentials', {
-      email,
-      password,
+
+  console.log("Data:", email, password);
+
+  const params = new URLSearchParams();
+  params.append("username", email.toString());
+  params.append("password", password.toString());
+  params.append("grant_type", "password");
+  params.append("scope", "");
+  params.append("client_id", "");
+  params.append("client_secret", "");
+
+  axiosInstance
+    .post("/api/v1/login/access-token", params)
+    .then((response) => {
+      console.log("Login Success", response.data);
+    })
+    .catch((error) => {
+      console.log("Login Error", error.toJSON());
     });
-  } catch (e) {
-    if (e instanceof AuthError) {
-      if (e.type === 'CredentialsSignin') {
-        throw new Error('Credenciais inválidas');
-      }
-    }
-  }
-  
-  redirect('/home');
-  
+
+  redirect("/home");
 }
