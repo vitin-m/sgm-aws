@@ -8,8 +8,8 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 - Você instalou a versão mais recente de `Python 3.13`;
 - Ter o Docker Instalado;
-- Ter o Npm instalado;
-- Você tem uma máquina `<Windows / Linux / Mac>;
+- Ter o Node instalado;
+- Você ter uma máquina `<Windows / Linux / Mac>;
 
 ## 🚀 Instalando sgm-aws
 
