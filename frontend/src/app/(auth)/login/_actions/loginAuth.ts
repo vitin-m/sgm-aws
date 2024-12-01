@@ -5,19 +5,17 @@ import { redirect } from "next/navigation";
 import axiosInstance from "../../../../lib/axios";
 
 export default async function LoginAction(fromData: FormData) {
-  console.log("Login Action", fromData);
-  const { email, password } = Object.fromEntries(fromData.entries());
-
-  console.log("Data:", email, password);
+  const { username, password } = Object.fromEntries(fromData.entries());
 
   const params = new URLSearchParams();
-  params.append("username", email.toString());
+  params.append("username", username.toString());
   params.append("password", password.toString());
   params.append("grant_type", "password");
   params.append("scope", "");
   params.append("client_id", "");
   params.append("client_secret", "");
 
+  console.log(params);
   axiosInstance
     .post("/api/v1/login/access-token", params)
     .then((response) => {

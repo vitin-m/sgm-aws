@@ -18,23 +18,6 @@ import Loading from './loading';
 import { BackgroundLines } from '@/components/ui/background-lines';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = useCallback(async (event: React.FormEvent) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('password', password);
-
-    try {
-      await LoginAction(formData);
-      // Adicione aqui o que deve acontecer após o login bem-sucedido
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
-  }, [email, password]);
-
   return (
     <BackgroundLines className='bg-transparent'>
       <div className="h-screen flex items-center justify-center z-10">
@@ -46,20 +29,18 @@ export default function Login() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit}>
+            <form action={LoginAction}>
               <div className="grid gap-4">
                 <div className="grid gap-2">
                   <Label className="text-zinc-50" htmlFor="email">
-                    Email
+                    User
                   </Label>
                   <Input
                     className="border-zinc-700 text-zinc-300"
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="Informe o user name..."
                     required
                   />
                 </div>
@@ -81,8 +62,6 @@ export default function Login() {
                     id="password"
                     name="password"
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                 </div>
