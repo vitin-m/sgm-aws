@@ -5,6 +5,7 @@ from typing import Annotated
 from pydantic import (
     AnyHttpUrl,
     AnyUrl,
+    Base64Bytes,
     InstanceOf,
     TypeAdapter,
     EmailStr as PydanticEmailStr,
@@ -44,10 +45,12 @@ class UserBase(SQLModel):
     username: Username
     email: EmailStr = Field(unique=True, index=True)
     description: str | None = Field(default=None, max_length=2047)
+    profile_pic: FileUrl | Base64Bytes | None
 
 
 class UserCreate(UserBase):
     password: Password
+    profile_pic: FileUrl | Base64Bytes | None
 
 
 class UserRegister(SQLModel):
@@ -55,6 +58,7 @@ class UserRegister(SQLModel):
     username: Username
     email: EmailStr
     password: Password
+    profile_pic: FileUrl | Base64Bytes | None = Field(default=None)
 
 
 class UserUpdate(SQLModel):
@@ -62,6 +66,7 @@ class UserUpdate(SQLModel):
     username: Username | None = Field(default=None)
     email: EmailStr | None = Field(default=None)
     description: str | None = Field(default=None, max_length=2047)
+    profile_pic: FileUrl | Base64Bytes | None = Field(default=None)
 
 
 class UserUpdatePassword(SQLModel):
@@ -73,10 +78,15 @@ class User(UserBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
 
     hashed_password: str
-    profile_pic: FileUrl = Field(sa_type=AutoString)
+    profile_pic: FileUrl | Base64Bytes | None = Field(sa_type=AutoString)
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc), nullable=False
     )
+
+
+class UserPublic(UserBase, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    profile_pic: FileUrl | Base64Bytes | None = Field(sa_type=AutoString)
 
 
 class Token(SQLModel):
