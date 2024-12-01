@@ -16,7 +16,7 @@ const registerUser = async (formData: FormData) => {
     throw new Error("Preencha todos os campos");
   }
 
-  let profilePicBase64 = "";
+  let profilePicBase64 = null;
 
   if (profileImage instanceof File) {
     const buffer = Buffer.from(await profileImage.arrayBuffer());
