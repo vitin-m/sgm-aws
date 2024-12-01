@@ -1,7 +1,0 @@
-🚫 invalid client - select a valid client value
-Error: 🚫 invalid client - select a valid client value
-    at D:\Repositorio_Git\TopicosEngSoftware\sgm-aws\frontend\node_modules\@hey-api\openapi-ts\dist\index.cjs:1329:8406
-    at Array.map (<anonymous>)
-    at nu (D:\Repositorio_Git\TopicosEngSoftware\sgm-aws\frontend\node_modules\@hey-api\openapi-ts\dist\index.cjs:1329:7951)
-    at async ou (D:\Repositorio_Git\TopicosEngSoftware\sgm-aws\frontend\node_modules\@hey-api\openapi-ts\dist\index.cjs:1329:9012)
-    at async start (D:\Repositorio_Git\TopicosEngSoftware\sgm-aws\frontend\node_modules\@hey-api\openapi-ts\bin\index.cjs:86:5)

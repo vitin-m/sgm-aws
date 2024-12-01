@@ -50,7 +50,7 @@ class UserBase(SQLModel):
 
 class UserCreate(UserBase):
     password: Password
-    profile_pic: FileUrl | Base64Bytes | None
+    profile_pic: FileUrl | Base64Bytes | str | None
 
 
 class UserRegister(SQLModel):

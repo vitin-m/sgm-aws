@@ -11,6 +11,7 @@ router = APIRouter()
 
 @router.post("/signup", response_model=UserPublic)
 async def register_user(session: SessionDep, user_in: UserCreate) -> UserPublic:
+    print("UserIn:", user_in)
     user = crud.get_user_by_email(session=session, email=user_in.email)
     if user:
         raise HTTPException(

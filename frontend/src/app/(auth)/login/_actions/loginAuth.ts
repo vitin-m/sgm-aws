@@ -17,7 +17,7 @@ export default async function LoginAction(fromData: FormData) {
 
   console.log(params);
   axiosInstance
-    .post("/api/v1/login/access-token", params)
+    .post("/login/access-token", params)
     .then((response) => {
       console.log("Login Success", response.data);
     })

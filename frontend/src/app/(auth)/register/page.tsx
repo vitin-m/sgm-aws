@@ -98,6 +98,7 @@ export default function Register() {
                   <Label className="text-zinc-50" htmlFor="profileImage">Foto de Perfil</Label>
                   <div className="flex items-center justify-center gap-2">
                     <Input
+                      required
                       className="border-zinc-700 text-zinc-300 cursor-pointer "
                       id="profileImage"
                       name="profileImage"
