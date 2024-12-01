@@ -69,7 +69,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
       <a href="#" title="defina o título do link">
         <img src="https://avatars.githubusercontent.com/u/62776981?v=4.jpg" width="100px;" alt="Foto do Iuri Silva no GitHub"/><br>
         <sub>
-          <b>João vitor</b>
+          <b>João Vitor</b>
         </sub>
       </a>
     </td>
@@ -77,7 +77,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
       <a href="#" title="defina o título do link">
         <img src="https://avatars.githubusercontent.com/u/54125157?v=4.jpg" width="100px;" alt="Foto do Mark Zuckerberg"/><br>
         <sub>
-          <b>Vitor melo</b>
+          <b>Vitor Melo</b>
         </sub>
       </a>
     </td>
@@ -93,7 +93,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
       <a href="#" title="defina o título do link">
         <img src="https://avatars.githubusercontent.com/u/43191511?v=4.jpg" width="100px;" alt="Foto do Steve Jobs"/><br>
         <sub>
-          <b>Lucas matheus</b>
+          <b>Lucas Matheus</b>
         </sub>
       </a>
     </td>
@@ -101,7 +101,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
       <a href="#" title="defina o título do link">
         <img src="https://avatars.githubusercontent.com/u/96149641?v=4.jpg" width="100px;" alt="Foto do Steve Jobs"/><br>
         <sub>
-          <b>Caio Cesar</b>
+          <b>Cayo Cesar</b>
         </sub>
       </a>
     </td>
