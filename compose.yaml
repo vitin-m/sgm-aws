@@ -1,0 +1,75 @@
+services:
+  db:
+    container_name: local-db-postgres
+    image: postgres:alpine
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      retries: 5
+      start_period: 10s
+      timeout: 20s
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB?}
+      - POSTGRES_USER=${POSTGRES_USER?}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?}
+    networks:
+      - db-network
+
+  pg-admin:
+    container_name: pg-admin-server
+    image: dpage/pgadmin4:latest
+    ports:
+      - 5050:5050
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - db-network
+      - default
+
+  prestart:
+    container_name: sgm-app-prestart
+    build:
+      context: ./backend
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    command: python -m app.prestart
+    networks:
+      - db-network
+
+  backend:
+    container_name: sgm-app
+    build:
+      context: ./backend
+    ports:
+      - 8000:8000
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      prestart:
+        condition: service_completed_successfully
+    develop:
+      watch:
+      - action: sync
+        path: ./backend/app
+        target: /src/app
+      - action: rebuild
+        path: ./backend/pyproject.toml
+    networks:
+      - db-network
+      - default
+
+volumes:
+  pgdata:
+
+networks:
+  db-network:
