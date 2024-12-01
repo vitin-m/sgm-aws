@@ -1,25 +1,43 @@
-import Link from 'next/link'
+"use client";
 
-import { Button } from '@/components/ui/button'
+import { useState, useCallback } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import loginAuth from './_actions/loginAuth'
-import { Suspense } from 'react'
-import Loading from './loading'
-import { BackgroundLines } from '@/components/ui/background-lines'
-import NextNProgress from 'nextjs-progressbar';
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import LoginAction from './_actions/loginAuth';
+import { Suspense } from 'react';
+import Loading from './loading';
+import { BackgroundLines } from '@/components/ui/background-lines';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = useCallback(async (event: React.FormEvent) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+
+    try {
+      await LoginAction(formData);
+      // Adicione aqui o que deve acontecer após o login bem-sucedido
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+  }, [email, password]);
+
   return (
     <BackgroundLines className='bg-transparent'>
-      <div className=" h-screen flex items-center justify-center z-10">
+      <div className="h-screen flex items-center justify-center z-10">
         <Card className="mx-auto max-w-sm border-primary">
           <CardHeader>
             <CardTitle className="text-3xl text-zinc-50">Login</CardTitle>
@@ -28,7 +46,7 @@ export default function Login() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form action={loginAuth}>
+            <form onSubmit={handleSubmit}>
               <div className="grid gap-4">
                 <div className="grid gap-2">
                   <Label className="text-zinc-50" htmlFor="email">
@@ -40,12 +58,14 @@ export default function Login() {
                     name="email"
                     type="email"
                     placeholder="m@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
                 <div className="grid gap-2">
                   <div className="flex">
-                    <Label className="text-zinc-50 " htmlFor="password">
+                    <Label className="text-zinc-50" htmlFor="password">
                       Password
                     </Label>
                     <Link
@@ -56,11 +76,13 @@ export default function Login() {
                     </Link>
                   </div>
                   <Input
-                    className="bord  er-zinc-700 text-zinc-300"
+                    className="border-zinc-700 text-zinc-300"
                     placeholder="Senha"
                     id="password"
                     name="password"
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                 </div>
@@ -81,5 +103,5 @@ export default function Login() {
         </Card>
       </div>
     </BackgroundLines>
-  )
+  );
 }
