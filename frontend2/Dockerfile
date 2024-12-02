@@ -4,7 +4,7 @@ WORKDIR /src
 
 ADD package.json package-lock.json ./
 
-RUN ["npm", "ci"]
+RUN ["npm", "i"]
 
 ADD ./ ./
 
