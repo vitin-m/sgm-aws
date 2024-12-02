@@ -167,9 +167,38 @@ function convertToBase64(file: File): Promise<string> {
   justify-content: center;
   align-items: center;
   height: 100vh;
-
+  background: linear-gradient(135deg, #000000 0%, #fc2525 100%); 
   .session__form-content {
-    width: 300px;
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+
+    .form-title {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: #fc0404;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 5px;
+      transition: all 0.3s;
+
+      &:hover {
+        background: #2575fc;
+        transform: translateY(-2px);
+      }
+    }
   }
 }
 </style>

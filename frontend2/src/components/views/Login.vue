@@ -10,6 +10,8 @@
         @finish="handleSubmitLogin"
         @finishFailed="handleSubmitLoginFailed"
       >
+        <h2 class="form-title">Login</h2>
+
         <a-form-item
           label="E-mail"
           name="email"
@@ -26,19 +28,16 @@
           <a-input-password v-model:value="formState.password" />
         </a-form-item>
 
-        <!-- <a-form-item name="remember" :wrapper-col="{ offset: 8, span: 16 }">
-          <a-checkbox v-model:checked="formState.remember">
-            Remember me
-          </a-checkbox>
-        </a-form-item> -->
-
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-          <a-button type="primary" html-type="submit">Submit</a-button>
+          <a-button type="primary" html-type="submit" class="btn-submit">
+            Login
+          </a-button>
         </a-form-item>
 
-        <!-- Link to Register -->
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-          <router-link to="/register">Register</router-link>
+          <router-link to="/register" class="register-link">
+            Don't have an account? Register here.
+          </router-link>
         </a-form-item>
       </a-form>
     </div>
@@ -121,9 +120,57 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: linear-gradient(135deg, #000000 0%, #fc2525 100%);
+  padding: 1rem;
 
   .session__form-content {
-    width: 300px;
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+
+    .form-title {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: #fc0404;
+      color: #ffffff;
+      font-weight: bold;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 5px;
+      transition: all 0.3s;
+
+      &:hover {
+        background: #2575fc;
+        transform: translateY(-2px);
+        
+      }
+    }
+
+    .register-link {
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+      margin-top: 1rem;
+      color: #ff0404;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+
+      &:hover {
+        color: #2575fc;
+        text-decoration: underline;
+      }
+    }
   }
 }
 </style>
