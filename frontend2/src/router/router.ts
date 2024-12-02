@@ -31,7 +31,12 @@ const router = createRouter({
 
 // Router Validations
 router.beforeResolve(async (to, from, next) => {
-  return (await routerValidations(to, from, next)) || next();
+  const isValid = (await routerValidations(to, from, next)) as any;
+  if (isValid) {
+    next();
+  } else {
+    next(false); // or handle the invalid case as needed
+  }
 });
 
 export default router;

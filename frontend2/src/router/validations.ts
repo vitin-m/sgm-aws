@@ -1,16 +1,11 @@
-import { ComponentPublicInstance } from "vue";
-import {
-  RouteLocationRaw,
-  RouteLocationNormalized,
-  NavigationGuardNext,
-} from "vue-router";
-type NavigationGuardNextCallback = (vm: ComponentPublicInstance) => unknown;
+import { RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 
 async function routerValidations(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext
-) {
+): Promise<void> {
+  const pathFrom = from.name;
   const pathName = to.name;
   const pathUrl = to.path;
 
@@ -35,7 +30,7 @@ async function routerValidations(
   }
 
   // Return default next route
-  return next();
+  return next({ name: pathFrom });
 }
 
 export default routerValidations;
