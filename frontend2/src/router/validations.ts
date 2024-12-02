@@ -4,10 +4,14 @@ async function routerValidations(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext
-): Promise<void> {
+): Promise<any> {
   const pathFrom = from.name;
   const pathName = to.name;
   const pathUrl = to.path;
+
+  if (pathFrom == null) {
+    console.log("ROUTER VALIDATION | First Load");
+  }
 
   // Home and Already Authenticated
   if (pathName == "login") {
@@ -30,7 +34,7 @@ async function routerValidations(
   }
 
   // Return default next route
-  return next({ name: pathFrom });
+  return next();
 }
 
 export default routerValidations;
