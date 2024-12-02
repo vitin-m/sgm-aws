@@ -6,6 +6,8 @@ from tenacity import before_log, retry, stop_after_attempt, wait_fixed
 
 from app.core import engine
 from app.core.db import init_db
+from app.core import crud
+from app.core.models import UserCreate
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Prestart>>")
@@ -20,10 +22,17 @@ def init(engine: Engine):
     try:
         with Session(engine) as session:
             session.exec(select(1))
+            if not crud.get_user_by_email(session=session, email="admin@mail.com"):
+                user_create = UserCreate(
+                    full_name="admin user",
+                    username="admin",
+                    email="admin@mail.com",
+                    password="senha123"
+                )
+                crud.create_user(session=session, user_create=user_create)
     except Exception as e:
         logger.error(e)
         raise e
-
 
 def main():
     init(engine)

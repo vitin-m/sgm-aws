@@ -22,8 +22,6 @@ TokenDep = Annotated[str, Depends(oauth2)]
 
 
 def get_current_user(session: SessionDep, token: TokenDep) -> User:
-    print("Token:", token)
-
     try:
         token_data = TokenPayload(**security.decode_token(token))
     except (InvalidTokenError, ValidationError):
