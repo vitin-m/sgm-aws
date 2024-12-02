@@ -12,12 +12,15 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import LoginAction from './_actions/loginAuth';
+
 import { Suspense } from 'react';
 import Loading from './loading';
 import { BackgroundLines } from '@/components/ui/background-lines';
 
+import { useState } from 'react';
+
 export default function Login() {
-  return (
+   return (
     <BackgroundLines className='bg-transparent'>
       <div className="h-screen flex items-center justify-center z-10">
         <Card className="mx-auto max-w-sm border-primary">
@@ -31,7 +34,7 @@ export default function Login() {
             <form action={LoginAction}>
               <div className="grid gap-4">
                 <div className="grid gap-2">
-                  <Label className="text-zinc-50" htmlFor="email">
+                  <Label className="text-zinc-50" htmlFor="username">
                     User
                   </Label>
                   <Input
