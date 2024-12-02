@@ -22,6 +22,13 @@ def init(engine: Engine):
     try:
         with Session(engine) as session:
             session.exec(select(1))
+    except Exception as e:
+        logger.error(e)
+        raise e
+
+def user_init(engine: Engine):
+    try:
+        with Session(engine) as session:
             if not crud.get_user_by_email(session=session, email="admin@mail.com"):
                 user_create = UserCreate(
                     full_name="admin user",
@@ -37,6 +44,7 @@ def init(engine: Engine):
 def main():
     init(engine)
     init_db()
+    user_init(engine)
 
 
 if __name__ == "__main__":
