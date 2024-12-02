@@ -29,7 +29,7 @@ services:
       - db
     networks:
       - db-network
-      - default
+      - sgm-network
 
   prestart:
     container_name: sgm-app-prestart
@@ -66,30 +66,22 @@ services:
         path: ./backend/pyproject.toml
     networks:
       - db-network
-      - default
+      - sgm-network
   
-  # frontend:
-  #   container_name: sgm-front
-  #   build:
-  #     context: /frontend
-  #   ports:
-  #     - 3000:3000
-  #   env_file: /frontend/.env
-  #   networks:
-  #     - default
-  #   restart: always
-  #   develop:
-  #     watch:
-  #     - action: sync
-  #       path: /frontend/app/
-  #       target: /src/app/
-  #     - action: rebuild
-  #       path: ./backend/package-lock.json
-  #   environment:
-  #     - BACKEND_HOST=${BACKEND_HOST}
+  frontend-proxy:
+    container_name: sgm-frontend-proxy
+    build:
+      context: ./frontend2
+    networks:
+      - sgm-network
+    ports:
+      - 80:80
+    depends_on:
+      - backend
     
 volumes:
   pgdata:
 
 networks:
   db-network:
+  sgm-network:
