@@ -12,4 +12,35 @@ export default {
 
     return AxiosInstance.post("/login/access-token", params);
   },
+  logout: () => {
+    localStorage.removeItem("__sgm-aws");
+  },
+  getUserData: () => {
+    return AxiosInstance.get("/user/me");
+  },
+  register: (
+    fullname: string,
+    username: string,
+    email: string,
+    password: string,
+    description?: string,
+    profileImage?: string | null
+  ) => {
+    return AxiosInstance.post(
+      "/user/signup",
+      {
+        email: email,
+        password: password,
+        username: username,
+        full_name: fullname,
+        description: description,
+        profile_pic: profileImage,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  },
 };

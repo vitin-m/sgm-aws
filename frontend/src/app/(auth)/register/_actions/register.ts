@@ -48,8 +48,8 @@ const registerUser = async (formData: FormData) => {
     .catch((error) => {
       console.log("Registration Error", error);
     });
-    
-    // redirect("/login");
+
+  // redirect("/login");
 };
 
 export default registerUser;

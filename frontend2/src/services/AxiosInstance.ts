@@ -9,4 +9,20 @@ const instance = axios.create({
   },
 });
 
+instance.interceptors.request.use(
+  (requestConfig) => {
+    // Adiciona o token Bearer a todas as requisições
+    const token = localStorage.getItem("__sgm-aws");
+    if (token) {
+      requestConfig.headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    return requestConfig;
+  },
+  (error) => {
+    // Lida com erros de requisição
+    return Promise.reject(error);
+  }
+);
+
 export default instance;

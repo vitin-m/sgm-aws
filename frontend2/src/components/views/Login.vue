@@ -44,6 +44,7 @@
 import { reactive } from "vue";
 
 import AuthService from "../../services/AuthService";
+import { AxiosResponse } from "axios";
 
 interface FormState {
   email: string;
@@ -61,11 +62,28 @@ const handleSubmitLogin = async (values: any) => {
   console.log("Success:", values);
 
   await AuthService.login(formState.email, formState.password)
-    .then((response) => {
-      console.log("LOGIN | response: ", response);
-    })
+    .then(
+      (
+        response: AxiosResponse<{ access_token: string; token_type: string }>
+      ) => {
+        console.log("LOGIN | response: ", response);
+        const token = response.data.access_token;
+        localStorage.setItem("__sgm-aws", token);
+        fetchUserData();
+      }
+    )
     .catch((error) => {
       console.log("LOGIN | error: ", error);
+    });
+};
+
+const fetchUserData = async () => {
+  await AuthService.getUserData()
+    .then((response) => {
+      console.log("GET USER DATA | response: ", response);
+    })
+    .catch((error) => {
+      console.log("GET USER DATA | error: ", error);
     });
 };
 
