@@ -1,6 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
-import { UserProvider } from "../contexts/context-user"
+import { UserProvider } from "../../contexts/context-user"
 import { Button } from "@/components/ui/button"
 import { TbHome } from "react-icons/tb";
 import Link from "next/link";
