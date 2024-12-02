@@ -4,8 +4,11 @@ import { redirect } from 'next/navigation'
 
 import axiosInstance from '../../../../lib/axios'
 
+import { cookies } from 'next/headers'
+
 export default async function LoginAction(fromData: FormData) {
   const { username, password } = Object.fromEntries(fromData.entries())
+  const cookieStore = await cookies()
 
   const params = new URLSearchParams()
   params.append('username', username.toString())
@@ -21,13 +24,12 @@ export default async function LoginAction(fromData: FormData) {
     //   redirect('/home')
 
     await axiosInstance.post('/login/access-token', params).then((response) => {
-    console.log("Retorno", response);
-    localStorage.setItem('loginData', JSON.stringify(response.data));
-    redirect("/home");
-  })
-  .catch((error) => {
-    throw new Error("Erro ao fazer login");
-  });
-
+      const token = JSON.stringify(response.data)
+      cookieStore.set('tokenUser', token)
+      redirect("/home");
+    })
+    .catch((error) => {
+      throw new Error("Erro ao fazer login");
+    });
   // redirect("/home");
 }
