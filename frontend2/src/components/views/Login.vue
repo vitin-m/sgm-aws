@@ -21,7 +21,7 @@
         </a-form-item>
 
         <a-form-item
-          label="Password"
+          label="Senha"
           name="password"
           :rules="[{ required: true, message: 'Please input your password!' }]"
         >
@@ -36,7 +36,7 @@
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
           <router-link to="/register" class="register-link">
-            Don't have an account? Register here.
+            Não possui uma conta? Registre-se aqui.
           </router-link>
         </a-form-item>
       </a-form>
@@ -145,7 +145,7 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
       color: #ffffff;
       font-weight: bold;
       border: none;
-      padding: 0.75rem;
+      padding: 0.2rem;
       border-radius: 5px;
       transition: all 0.3s;
 

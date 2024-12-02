@@ -10,6 +10,7 @@
         @finish="handleSubmitRegister"
         @finishFailed="handleSubmitRegisterFailed"
       >
+        <h2 class="form-title">Register</h2>
         <a-form-item
           label="Username"
           name="username"
@@ -19,7 +20,7 @@
         </a-form-item>
 
         <a-form-item
-          label="Full Name"
+          label="Nome Completo"
           name="full_name"
           :rules="[{ required: true, message: 'Please input your full name!' }]"
         >
@@ -39,7 +40,7 @@
         </a-form-item>
 
         <a-form-item
-          label="Password"
+          label="Senha"
           name="password"
           :rules="[{ required: true, message: 'Please input your password!' }]"
         >
@@ -47,7 +48,7 @@
         </a-form-item>
 
         <!-- Imagem -->
-        <a-form-item label="Profile Image" name="profileImage">
+        <a-form-item label="Imagem de Perfil" name="profileImage">
           <a-upload
             :maxCount="1"
             accept="image/png"
@@ -58,7 +59,7 @@
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-          <a-button type="primary" html-type="submit">Submit</a-button>
+          <a-button type="primary" html-type="submit">Registrar</a-button>
         </a-form-item>
       </a-form>
     </div>
@@ -170,7 +171,7 @@ function convertToBase64(file: File): Promise<string> {
   background: linear-gradient(135deg, #000000 0%, #fc2525 100%); 
   .session__form-content {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);

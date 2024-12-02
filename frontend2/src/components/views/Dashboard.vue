@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard-session">
     <h1>Dashboard</h1>
-
     <!-- Usua'rio -->
     <div v-if="userData" class="session__user-data">
       <img
