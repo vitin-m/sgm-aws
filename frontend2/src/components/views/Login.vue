@@ -46,6 +46,13 @@ import { reactive } from "vue";
 import AuthService from "../../services/AuthService";
 import { AxiosResponse } from "axios";
 
+import IUserData from "../../interfaces/IUserData";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
+const store = useStore();
+const route = useRouter();
+
 interface FormState {
   email: string;
   password: string;
@@ -79,8 +86,17 @@ const handleSubmitLogin = async (values: any) => {
 
 const fetchUserData = async () => {
   await AuthService.getUserData()
-    .then((response) => {
+    .then(async (response: AxiosResponse<IUserData>) => {
       console.log("GET USER DATA | response: ", response);
+      const token = import.meta.env.VITE_API_ROOT;
+      await store.dispatch("auth/login", {
+        token,
+        userData: {
+          ...response.data,
+        },
+      });
+
+      route.push({ name: "dashboard" });
     })
     .catch((error) => {
       console.log("GET USER DATA | error: ", error);

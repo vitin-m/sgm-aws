@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+
 import AuthService from "../../services/AuthService";
 
 const formState = ref({
@@ -53,34 +54,30 @@ const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
 const handleSubmitRegister = async (values: any) => {
   console.log("Success:", values);
 
-  try {
-    let profileImageBase64 = null;
+  let profileImageBase64 = null;
 
-    if (formState.value.profileImage) {
-      profileImageBase64 = await validateAndConvertImage(
-        formState.value.profileImage,
-        maxSizeInBytes,
-        allowedFormats
-      );
-    }
-
-    await AuthService.register(
-      formState.value.email,
-      formState.value.password,
-      formState.value.username,
-      formState.value.full_name,
-      formState.value.description,
-      profileImageBase64
-    )
-      .then((response) => {
-        console.log("REGISTER | response: ", response);
-      })
-      .catch((error) => {
-        console.log("REGISTER | error: ", error);
-      });
-  } catch (error) {
-    console.error("Erro ao processar a imagem:", error);
+  if (formState.value.profileImage) {
+    profileImageBase64 = await validateAndConvertImage(
+      formState.value.profileImage,
+      maxSizeInBytes,
+      allowedFormats
+    );
   }
+
+  await AuthService.register(
+    formState.value.email,
+    formState.value.password,
+    formState.value.username,
+    formState.value.full_name,
+    formState.value.description,
+    profileImageBase64
+  )
+    .then(async (response) => {
+      console.log("REGISTER | response: ", response);
+    })
+    .catch((error) => {
+      console.log("REGISTER | error: ", error);
+    });
 };
 
 const handleSubmitRegisterFailed = (errorInfo: any) => {
