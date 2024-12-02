@@ -17,8 +17,7 @@ async def register_user(session: SessionDep, user_in: UserCreate) -> UserPublic:
         raise HTTPException(
             status_code=400, detail="User credential already registered"
         )
-    user_create = UserCreate.model_validate(user_in)
-    user = crud.create_user(session=session, user_create=user_create)
+    user = crud.create_user(session=session, user_create=user_in)
     return UserPublic.model_validate(user)
 
 

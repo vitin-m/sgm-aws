@@ -45,7 +45,7 @@ services:
       - db-network
 
   backend:
-    container_name: sgm-app
+    container_name: sgm-back
     build:
       context: ./backend
     ports:
@@ -67,7 +67,27 @@ services:
     networks:
       - db-network
       - default
-
+  
+  frontend:
+    container_name: sgm-front
+    build:
+      context: /frontend
+    ports:
+      - 3000:3000
+    env_file: /frontend/.env
+    networks:
+      - default
+    restart: always
+    develop:
+      watch:
+      - action: sync
+        path: /frontend/app/
+        target: /src/app/
+      - action: rebuild
+        path: ./backend/package-lock.json
+    environment:
+      - BACKEND_HOST=${BACKEND_HOST}
+    
 volumes:
   pgdata:
 

@@ -41,11 +41,11 @@ const registerUser = async (formData: FormData) => {
       }
     )
     .then((response) => {
-      console.log("Registration Success", response.data.toJSON());
+      console.log("Registration Success", response.data);
       // redirect("/login"); // Uncomment if you want to redirect after successful registration
     })
     .catch((error) => {
-      console.log("Registration Error", error.toJSON());
+      console.log("Registration Error", error);
     });
 };
 
