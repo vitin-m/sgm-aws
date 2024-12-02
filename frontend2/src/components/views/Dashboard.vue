@@ -8,7 +8,7 @@
         alt="Profile Image"
         :src="
           userData.profile_pic
-            ? userData.profile_pic
+            ? 'data:image/png;base64,' + userData.profile_pic
             : 'https://thumbs.dreamstime.com/b/perfil-de-usu%C3%A1rio-do-vetor-avatar-padr%C3%A3o-179376714.jpg'
         "
       />

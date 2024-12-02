@@ -11,6 +11,26 @@
         @finishFailed="handleSubmitRegisterFailed"
       >
         <a-form-item
+          label="Username"
+          name="username"
+          :rules="[{ required: true, message: 'Please input your username!' }]"
+        >
+          <a-input v-model:value="formState.username" />
+        </a-form-item>
+
+        <a-form-item
+          label="Full Name"
+          name="full_name"
+          :rules="[{ required: true, message: 'Please input your full name!' }]"
+        >
+          <a-input v-model:value="formState.full_name" />
+        </a-form-item>
+
+        <!-- <a-form-item label="Description" name="description">
+          <a-input v-model:value="formState.description" />
+        </a-form-item> -->
+
+        <a-form-item
           label="E-mail"
           name="email"
           :rules="[{ required: true, message: 'Please input your email!' }]"
@@ -26,6 +46,17 @@
           <a-input-password v-model:value="formState.password" />
         </a-form-item>
 
+        <!-- Imagem -->
+        <a-form-item label="Profile Image" name="profileImage">
+          <a-upload
+            :maxCount="1"
+            accept="image/png"
+            v-model:file-list="formState.profileImage"
+          >
+            <a-button>Click to Upload</a-button>
+          </a-upload>
+        </a-form-item>
+
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
           <a-button type="primary" html-type="submit">Submit</a-button>
         </a-form-item>
@@ -38,6 +69,9 @@
 import { ref } from "vue";
 
 import AuthService from "../../services/AuthService";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const formState = ref({
   email: "",
@@ -45,20 +79,20 @@ const formState = ref({
   username: "",
   full_name: "",
   description: "",
-  profileImage: null,
+  profileImage: null as null | any[],
 });
 
 const allowedFormats = ["jpeg", "png", "gif"];
 const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
 
-const handleSubmitRegister = async (values: any) => {
-  console.log("Success:", values);
+const handleSubmitRegister = async () => {
+  console.log("REGISTER | formState: ", formState.value);
 
   let profileImageBase64 = null;
 
   if (formState.value.profileImage) {
     profileImageBase64 = await validateAndConvertImage(
-      formState.value.profileImage,
+      formState.value.profileImage[0].originFileObj as File,
       maxSizeInBytes,
       allowedFormats
     );
@@ -74,9 +108,11 @@ const handleSubmitRegister = async (values: any) => {
   )
     .then(async (response) => {
       console.log("REGISTER | response: ", response);
+      router.push({ name: "login" });
     })
     .catch((error) => {
       console.log("REGISTER | error: ", error);
+      alert("Erro ao registrar usuário");
     });
 };
 

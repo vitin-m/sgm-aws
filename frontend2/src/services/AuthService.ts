@@ -34,7 +34,7 @@ export default {
         username: username,
         full_name: fullname,
         description: description,
-        profile_pic: profileImage,
+        profile_pic: profileImage ?? undefined,
       },
       {
         headers: {

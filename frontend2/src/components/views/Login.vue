@@ -26,14 +26,19 @@
           <a-input-password v-model:value="formState.password" />
         </a-form-item>
 
-        <a-form-item name="remember" :wrapper-col="{ offset: 8, span: 16 }">
+        <!-- <a-form-item name="remember" :wrapper-col="{ offset: 8, span: 16 }">
           <a-checkbox v-model:checked="formState.remember">
             Remember me
           </a-checkbox>
-        </a-form-item>
+        </a-form-item> -->
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
           <a-button type="primary" html-type="submit">Submit</a-button>
+        </a-form-item>
+
+        <!-- Link to Register -->
+        <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
+          <router-link to="/register">Register</router-link>
         </a-form-item>
       </a-form>
     </div>
@@ -81,6 +86,7 @@ const handleSubmitLogin = async (values: any) => {
     )
     .catch((error) => {
       console.log("LOGIN | error: ", error);
+      alert("Login failed");
     });
 };
 
@@ -100,6 +106,7 @@ const fetchUserData = async () => {
     })
     .catch((error) => {
       console.log("GET USER DATA | error: ", error);
+      alert("Get user data failed");
     });
 };
 
