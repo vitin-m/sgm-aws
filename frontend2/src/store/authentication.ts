@@ -1,3 +1,4 @@
+import AuthService from "../services/AuthService";
 import IUserData from "../interfaces/IUserData";
 
 export interface IAuthenticationState {
@@ -28,13 +29,29 @@ export default {
     },
   },
   actions: {
-    login({ commit }: any, { token, userData }: any) {
-      commit("setToken", token);
-      commit("setUserData", userData);
+    async login({ commit }: any, { token, userData }: any) {
+      await commit("setToken", token);
+      await commit("setUserData", userData);
     },
-    logout({ commit }: any) {
-      commit("setToken", null);
-      commit("setUserData", null);
+    async logout({ commit }: any) {
+      await commit("setToken", null);
+      await commit("setUserData", null);
+      localStorage.removeItem("__sgm-aws");
+    },
+    async fetchUserData({ commit }: any) {
+      const token = localStorage.getItem("__sgm-aws");
+
+      const response = await AuthService.getUserData();
+
+      console.log("Response", response);
+
+      if (response.status === 200) {
+        await commit("setToken", token);
+        await commit("setUserData", response.data);
+      } else {
+        await commit("setToken", null);
+        await commit("setUserData", null);
+      }
     },
   },
 };

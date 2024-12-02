@@ -89,7 +89,7 @@ const fetchUserData = async () => {
     .then(async (response: AxiosResponse<IUserData>) => {
       console.log("GET USER DATA | response: ", response);
       const token = import.meta.env.VITE_API_ROOT;
-      await store.dispatch("auth/login", {
+      await store.dispatch("Auth/login", {
         token,
         userData: {
           ...response.data,
