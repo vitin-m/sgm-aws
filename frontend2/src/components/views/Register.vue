@@ -10,7 +10,7 @@
         @finish="handleSubmitRegister"
         @finishFailed="handleSubmitRegisterFailed"
       >
-        <h2 class="form-title">Register</h2>
+        <h2 class="form-title">Registre-se</h2>
         <a-form-item
           label="Username"
           name="username"
@@ -59,7 +59,9 @@
         </a-form-item>
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-          <a-button type="primary" html-type="submit">Registrar</a-button>
+          <a-button type="primary" html-type="submit" class="btn-submit">
+            Registrar
+          </a-button>
         </a-form-item>
       </a-form>
     </div>
@@ -172,7 +174,7 @@ function convertToBase64(file: File): Promise<string> {
   .session__form-content {
     width: 100%;
     max-width: 450px;
-    background: #fff;
+    background: #fdfdfd;
     border-radius: 10px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     padding: 2rem;
@@ -187,13 +189,14 @@ function convertToBase64(file: File): Promise<string> {
 
     .btn-submit {
       width: 100%;
-      background: #fc0404;
-      color: #fff;
+      background: #fc0303;
+      color: #ffffff;
       font-weight: bold;
       border: none;
-      padding: 0.75rem;
+      padding: 0.2rem;
       border-radius: 5px;
       transition: all 0.3s;
+      align-content: center;
 
       &:hover {
         background: #2575fc;

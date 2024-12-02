@@ -36,7 +36,7 @@
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
           <router-link to="/register" class="register-link">
-            Não possui uma conta? Registre-se aqui.
+            Registre-se 
           </router-link>
         </a-form-item>
       </a-form>
@@ -141,7 +141,7 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
 
     .btn-submit {
       width: 100%;
-      background: #fc0404;
+      background: #ff0000;
       color: #ffffff;
       font-weight: bold;
       border: none;
@@ -150,17 +150,17 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
       transition: all 0.3s;
 
       &:hover {
-        background: #2575fc;
+        background: #ff0404;
         transform: translateY(-2px);
         
       }
     }
-
     .register-link {
       display: inline-block;
-      text-align: center;
+      text-align: right;
       width: 100%;
-      margin-top: 1rem;
+      transform: translateY(-1.5rem);
+      //margin-top: 0rem;
       color: #ff0404;
       text-decoration: none;
       font-weight: 600;
