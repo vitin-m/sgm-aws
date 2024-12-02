@@ -43,13 +43,13 @@ const registerUser = async (formData: FormData) => {
     )
     .then((response) => {
       console.log("Registration Success", response.data);
-      // redirect("/login"); // Uncomment if you want to redirect after successful registration
+      redirect("/login"); // Uncomment if you want to redirect after successful registration
     })
     .catch((error) => {
       console.log("Registration Error", error);
     });
     
-    redirect("/login");
+    // redirect("/login");
 };
 
 export default registerUser;

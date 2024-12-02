@@ -4,6 +4,8 @@ import "./globals.css";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import NextProgress from "nextjs-progressbar"
 
+import { UserProvider } from "@/contexts/context-user";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -30,7 +32,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <UserProvider>
+          {children}
+        </UserProvider>
       </body>
     </html>
   );

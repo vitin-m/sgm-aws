@@ -1,25 +1,19 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { PrismaClient } from '@prisma/client';
-// import { auth } from '../../../auth';
-// import { getServerSideProps } from './getServerSideProps';
-
-import { getSession } from 'next-auth/react';
-
-const prisma = new PrismaClient();
+import axios from 'axios';
 
 interface User {
-  id: string;
+  full_name: string | null;
+  user_name: string; 
   email: string;
-  name: string | null;
   password: string;
-  avatar: string | null;
+  description: string;
+  profile_pic: string | null;
 }
 
 interface UserContextProps {
   user: User | null;
-  // setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -33,13 +27,19 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const session = await getSession();
-
-      if (session?.user?.email) {
-        const userData = await prisma.user.findUnique({
-          where: { email: session.user.email },
-        });
-        setUser(userData);
+      const loginData = localStorage.getItem('loginData');
+      if (loginData) {
+        const parsedData = JSON.parse(loginData);
+        try {
+          const response = await axios.get('/user/me', {
+            headers: {
+              Authorization: `Bearer ${parsedData.access_token}`,
+            },
+          });
+          setUser(response.data);
+        } catch (error) {
+          console.error('Erro ao buscar usuário', error);
+        }
       }
     };
     fetchUser();

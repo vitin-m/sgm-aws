@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/sidebar'
 
 import { auth, signOut } from '@/../../auth'
-import { getServerSideProps } from '@/app/contexts/getServerSideProps'
+import { getServerSideProps } from '@/contexts/getServerSideProps'
 import { Suspense, useEffect, useState } from 'react'
 import { Session } from 'next-auth'
 import Logout from '@/app/(auth)/_actions/logout'

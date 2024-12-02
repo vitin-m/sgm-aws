@@ -9,4 +9,5 @@ const instance = axios.create({
   },
 });
 
+console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', instance);
 export default instance;
