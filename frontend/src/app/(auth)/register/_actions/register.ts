@@ -17,9 +17,9 @@ const registerUser = async (formData: FormData) => {
     throw new Error("Preencha todos os campos");
   }
 
-  let profilePicBase64 = "";
+  let profilePicBase64 = null;
 
-  if (profileImage instanceof File) {
+  if (profileImage && profileImage instanceof File) {
     const buffer = Buffer.from(await profileImage.arrayBuffer());
     profilePicBase64 = buffer.toString("base64");
   }
@@ -42,11 +42,11 @@ const registerUser = async (formData: FormData) => {
       }
     )
     .then((response) => {
-      console.log("Registration Success", response.data.toJSON());
+      console.log("Registration Success", response.data);
       // redirect("/login"); // Uncomment if you want to redirect after successful registration
     })
     .catch((error) => {
-      console.log("Registration Error", error.toJSON());
+      console.log("Registration Error", error);
     });
     
     redirect("/login");
