@@ -18,7 +18,7 @@ const registerUser = async (formData: FormData) => {
 
   let profilePicBase64 = null;
 
-  if (profileImage instanceof File) {
+  if (profileImage && profileImage instanceof File) {
     const buffer = Buffer.from(await profileImage.arrayBuffer());
     profilePicBase64 = buffer.toString("base64");
   }
