@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 // import { redirect } from "next/navigation";
 import axiosInstance from "../../../../lib/axios";
 import { Buffer } from "buffer";
@@ -47,6 +48,8 @@ const registerUser = async (formData: FormData) => {
     .catch((error) => {
       console.log("Registration Error", error);
     });
+    
+    redirect("/login");
 };
 
 export default registerUser;
