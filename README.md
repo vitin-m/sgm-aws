@@ -11,6 +11,16 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 - Ter o Node instalado;
 - Você ter uma máquina `<Windows / Linux / Mac>;
 
+## Bibliotecas Utilizadas (Frontend)
+
+1. [Tool build ](https://vite.dev)
+2. [Vue](https://vuejs.org)
+3. [Store library](https://vuex.vuejs.org )
+4. [Router library](https://vuex.vuejs.org)
+5. [Component Library](https://antdv.com)
+6. [Style library](https://sass-lang.com)
+7. [HTTP Request Library](https://axios-http.com)
+
 ## 🚀 Instalando sgm-aws
 
 Para instalar o sgm-aws, siga estas etapas:
