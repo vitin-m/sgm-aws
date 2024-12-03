@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import IUserData from "@/interfaces/IUserData";
+import IUserData from "../../interfaces/IUserData";
 import { computed, onBeforeMount, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
