@@ -36,7 +36,7 @@
 
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
           <router-link to="/register" class="register-link">
-            Registre-se 
+            Registre-se
           </router-link>
         </a-form-item>
       </a-form>
@@ -53,6 +53,7 @@ import { AxiosResponse } from "axios";
 import IUserData from "../../interfaces/IUserData";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { notification } from "ant-design-vue";
 
 const store = useStore();
 const route = useRouter();
@@ -85,7 +86,20 @@ const handleSubmitLogin = async (values: any) => {
     )
     .catch((error) => {
       console.log("LOGIN | error: ", error);
-      alert("Login failed");
+
+      if (typeof error.response.data.detail === "string") {
+        notification.error({
+          message: "Error",
+          placement: "bottomRight",
+          description: error.response.data.detail,
+        });
+      } else {
+        notification.error({
+          message: "Error",
+          placement: "bottomRight",
+          description: error.response.data.detail[0].msg,
+        });
+      }
     });
 };
 
@@ -152,7 +166,6 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
       &:hover {
         background: #ff0404;
         transform: translateY(-2px);
-        
       }
     }
     .register-link {

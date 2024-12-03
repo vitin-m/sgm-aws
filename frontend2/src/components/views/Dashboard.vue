@@ -17,8 +17,10 @@
       <p><strong>Username:</strong> {{ userData.username }}</p>
       <p><strong>Nome:</strong> {{ userData.full_name }}</p>
       <p><strong>Email:</strong> {{ userData.email }}</p>
-      <!-- <p><strong>Criado em:</strong> {{ userData.createdAt }}</p> -->
-      <p><strong>Descrição:</strong> {{ userData.description }}</p>
+      <p>
+        <strong>Descrição:</strong>
+        {{ userData.description ? userData.description : "Sem Descrição" }}
+      </p>
     </div>
 
     <!-- Logout -->
@@ -33,11 +35,17 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 onBeforeMount(async () => {
-  await store.dispatch("Auth/fetchUserData");
+  const loggedUser: null | IUserData = await store.dispatch(
+    "Auth/fetchUserData"
+  );
+  if (!loggedUser) {
+    console.log("Dashboard | User not logged in");
+    handleLogout();
+  }
 });
 
 onMounted(() => {
-  console.log("Dashboard | userData: ", userData.value);
+  console.log("Dashboard | user Data: ", userData.value);
 });
 
 const store = useStore();

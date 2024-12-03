@@ -58,7 +58,7 @@ class UserRegister(SQLModel):
     email: EmailStr
     password: Password
     profile_pic: str | None = None
-    
+
 
 class UserUpdate(SQLModel):
     full_name: str | None = Field(default=None, max_length=255)

@@ -16,19 +16,18 @@ app = FastAPI(
     generate_unique_id_function=custom_generate_unique_id,
 )
 
-origins = [
-    "*",  # Allow all origins
-    "http://localhost",
-    "http://localhost:*",
-    "http://localhost:5173",
-    "http://localhost:8080",
-]
+# Configuração do CORS
+origins = ["*"]  # Permitir todas as origens
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins,  # Permitir todas as origens
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Permitir todos os métodos HTTP
+    allow_headers=["*"],  # Permitir todos os cabeçalhos
 )
+
+# Inclua o roteador da API
 app.include_router(api_router, prefix=settings.API_PATH)
+
+# Outras configurações e inicializações do aplicativo

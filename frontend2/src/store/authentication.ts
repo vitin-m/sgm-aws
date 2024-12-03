@@ -41,16 +41,22 @@ export default {
     async fetchUserData({ commit }: any) {
       const token = localStorage.getItem("__sgm-aws");
 
-      const response = await AuthService.getUserData();
+      try {
+        const response = await AuthService.getUserData();
 
-      console.log("Response", response);
+        console.log("STORE | Get User Data", response);
 
-      if (response.status === 200) {
-        await commit("setToken", token);
-        await commit("setUserData", response.data);
-      } else {
+        if (response.status === 200) {
+          await commit("setToken", token);
+          await commit("setUserData", response.data);
+          return response.data;
+        }
+      } catch (error) {
+        console.log("Error", error);
+
         await commit("setToken", null);
         await commit("setUserData", null);
+        return null;
       }
     },
   },

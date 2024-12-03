@@ -5,6 +5,7 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_API_ROOT,
   headers: {
     Accept: "application/json",
+    "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/x-www-form-urlencoded",
   },
 });

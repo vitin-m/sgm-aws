@@ -27,9 +27,9 @@
           <a-input v-model:value="formState.full_name" />
         </a-form-item>
 
-        <!-- <a-form-item label="Description" name="description">
+        <a-form-item label="Description" name="description">
           <a-input v-model:value="formState.description" />
-        </a-form-item> -->
+        </a-form-item>
 
         <a-form-item
           label="E-mail"
@@ -48,7 +48,13 @@
         </a-form-item>
 
         <!-- Imagem -->
-        <a-form-item label="Imagem de Perfil" name="profileImage">
+        <a-form-item
+          label="Imagem de Perfil"
+          name="profileImage"
+          :rules="[
+            { required: true, message: 'Please input your profile image!' },
+          ]"
+        >
           <a-upload
             :maxCount="1"
             accept="image/png"
@@ -69,10 +75,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 import AuthService from "../../services/AuthService";
 import { useRouter } from "vue-router";
+
+import { notification } from "ant-design-vue";
 
 const router = useRouter();
 
@@ -87,7 +95,6 @@ const formState = ref({
 
 const allowedFormats = ["jpeg", "png", "gif"];
 const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
-
 const handleSubmitRegister = async () => {
   console.log("REGISTER | formState: ", formState.value);
 
@@ -102,20 +109,38 @@ const handleSubmitRegister = async () => {
   }
 
   await AuthService.register(
+    formState.value.full_name,
+    formState.value.username,
     formState.value.email,
     formState.value.password,
-    formState.value.username,
-    formState.value.full_name,
     formState.value.description,
     profileImageBase64
   )
     .then(async (response) => {
       console.log("REGISTER | response: ", response);
+      notification.success({
+        message: "Success",
+        placement: "bottomRight",
+        description: "Novo usuário cadastrado com sucesso!",
+      });
       router.push({ name: "login" });
     })
-    .catch((error) => {
+    .catch((error: any) => {
       console.log("REGISTER | error: ", error);
-      alert("Erro ao registrar usuário");
+
+      if (typeof error.response.data.detail === "string") {
+        notification.error({
+          message: "Error",
+          placement: "bottomRight",
+          description: error.response.data.detail,
+        });
+      } else {
+        notification.error({
+          message: "Error",
+          placement: "bottomRight",
+          description: error.response.data.detail[0].msg,
+        });
+      }
     });
 };
 
@@ -170,7 +195,7 @@ function convertToBase64(file: File): Promise<string> {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #fc2525 100%); 
+  background: linear-gradient(135deg, #000000 0%, #fc2525 100%);
   .session__form-content {
     width: 100%;
     max-width: 450px;
