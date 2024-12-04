@@ -11,51 +11,23 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 - Ter o Node instalado;
 - Você ter uma máquina `<Windows / Linux / Mac>;
 
-## Bibliotecas Utilizadas (Frontend)
-
-1. [Tool build ](https://vite.dev)
-2. [Vue](https://vuejs.org)
-3. [Store library](https://vuex.vuejs.org )
-4. [Router library](https://vuex.vuejs.org)
-5. [Component Library](https://antdv.com)
-6. [Style library](https://sass-lang.com)
-7. [HTTP Request Library](https://axios-http.com)
-
 ## 🚀 Instalando sgm-aws
 
 Para instalar o sgm-aws, siga estas etapas:
 
-Linux e macOS:
+Linux/Windows/MacOS:
 
-Entre na Raiz do projeto e digite, a imagem docker sera criada e o container irá subir no seu servidor local;
+Entre na Raiz do projeto e digite:
 
 ```
 docker compose up
 ```
-Após o comando terminar sua execução entre na pasta `/frontend` e digite:
-
-```
-npm install
-npm run dev
-```
-
-Se atente a ter os arquivos `.env`e `frontend/.env` criados: 
-
-Windows:
-A única diferença no comando a ser executado é que deve-se atentar as variáveis de ambiente `.venv` 
-
-```
-<comando_de_instalação>
-```
+A imagem docker sera criada e o container irá subir no seu servidor local;
+Se atente a ter os arquivos `.env`e `frontend/.env` criados:
 
 ## ☕ Usando  sgm-aws
 
-Para usar  sgm-aws, siga estas etapas:
-
-```
-<exemplo_de_uso>
-```
-
+Baseado na saída do console do docker, observe o localhost e a porta que está sendo executada o servidor, acesse conforme sua necessidade, seguindo as rotas definidas no código da aplicação.
 
 ## 📫 Contribuindo para  sgm-aws
 
