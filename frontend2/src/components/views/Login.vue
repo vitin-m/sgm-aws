@@ -2,6 +2,7 @@
   <div class="login-session">
     <div class="session__form-content">
       <a-form
+        class="login-form"
         :model="formState"
         name="basic"
         :label-col="{ span: 8 }"
@@ -129,18 +130,23 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
 </script>
 
 <style scoped lang="scss">
+.login-form {
+  max-width: 300px;
+}
+
 .login-session {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #fc2525 100%);
+  background: linear-gradient(135deg, #330000 0%, #fc2525 100% );
   padding: 1rem;
-
+  
   .session__form-content {
+    border: 1px solid #000;
     width: 100%;
     max-width: 400px;
-    background: #fff;
+    background: #dbdbdb;
     border-radius: 10px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     padding: 2rem;
@@ -158,7 +164,7 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
       background: #ff0000;
       color: #ffffff;
       font-weight: bold;
-      border: none;
+      border: 1px solid #000;
       padding: 0.2rem;
       border-radius: 5px;
       transition: all 0.3s;

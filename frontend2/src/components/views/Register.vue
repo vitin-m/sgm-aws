@@ -195,12 +195,13 @@ function convertToBase64(file: File): Promise<string> {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #fc2525 100%);
+  background: linear-gradient(135deg, #330000 0%, #fc2525 100%);
   .session__form-content {
     width: 100%;
     max-width: 450px;
-    background: #fdfdfd;
+    background: #dbdbdb;
     border-radius: 10px;
+    border: 1px solid #000;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     padding: 2rem;
 

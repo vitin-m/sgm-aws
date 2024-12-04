@@ -3,6 +3,7 @@ import { createRouter, createWebHistory, RouterOptions } from "vue-router";
 import Login from "../components/views/Login.vue";
 import Register from "../components/views/Register.vue";
 import Dashboard from "../components/views/Dashboard.vue";
+import Home from "../components/views/home.vue";
 
 import routerValidations from "./validations.ts";
 
@@ -22,6 +23,12 @@ const routes = [
     path: "/dashboard",
     component: Dashboard,
   },
+  {
+    name: "home",
+    path: "/home",
+    component: Home,
+  },
+
 ] as RouterOptions["routes"];
 
 const router = createRouter({
