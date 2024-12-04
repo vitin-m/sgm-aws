@@ -50,17 +50,17 @@ export default {
   height: 25px;
   border-radius: 50%; 
   object-fit: cover; 
-  background: red;
+  background: #a8c0ff;
 }
 
 button {
-  background-color: red;
+  background-color: #a8c0ff;
   color: #000;
   padding: 5px 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   &:hover {
-    background-color: rgb(221, 0, 0);
+    background-color: #fbc2eb;
   }
   border-radius: 4px;
 }
@@ -80,14 +80,13 @@ button {
   &-header {
     position: fixed;
     top: 0; 
-    background: linear-gradient(135deg, #330000 0%, #fc2525 100% );
+    background: linear-gradient(135deg, #a8c0ff, #fbc2eb);
     color: #fff;
     padding: 10px;
     width: 100%;
     text-align: center;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #000;
 
     .options-list {
       position: absolute;
@@ -108,7 +107,7 @@ button {
     .options-list li {
       padding: 5px 10px;
       cursor: pointer;
-      color: red;
+      color: #a8c0ff;
     }
 
     .options-list li:hover {
@@ -124,8 +123,7 @@ button {
     
 
     .card {
-      background-color: #e4e4e4;
-      border: 1px solid #000;
+      background: linear-gradient(135deg, #a8c0ff, #fbc2eb);
       border-radius: 5px;
       padding: 20px;
       width: 45%;

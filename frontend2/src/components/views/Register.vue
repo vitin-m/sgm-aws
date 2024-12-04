@@ -195,40 +195,91 @@ function convertToBase64(file: File): Promise<string> {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #330000 0%, #fc2525 100%);
+  background: linear-gradient(135deg, #a8c0ff, #fbc2eb);
+  padding: 1rem;
+
   .session__form-content {
     width: 100%;
     max-width: 450px;
-    background: #dbdbdb;
-    border-radius: 10px;
-    border: 1px solid #000;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+    padding: 2.5rem;
+    transform: translateY(10px);
+    animation: fadeIn 1s ease forwards;
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
     .form-title {
       text-align: center;
-      margin-bottom: 1.5rem;
-      color: #333;
+      margin-bottom: 2rem;
+      color: #5c5edc;
       font-size: 1.8rem;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    a-form-item {
+      margin-bottom: 1.5rem;
+
+      input {
+        border: 1px solid #d1d1d1;
+        padding: 0.8rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+
+        &:focus {
+          border-color: #5c5edc;
+          box-shadow: 0 0 5px rgba(92, 94, 220, 0.5);
+        }
+      }
     }
 
     .btn-submit {
       width: 100%;
-      background: #fc0303;
+      background: linear-gradient(135deg, #6dd5ed, #2193b0);
       color: #ffffff;
       font-weight: bold;
       border: none;
-      padding: 0.2rem;
-      border-radius: 5px;
-      transition: all 0.3s;
-      align-content: center;
+      padding: 0.1rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
 
       &:hover {
-        background: #2575fc;
-        transform: translateY(-2px);
+        background: linear-gradient(135deg, #2193b0, #6dd5ed);
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(33, 147, 176, 0.5);
+      }
+    }
+
+    .login-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #5c5edc;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: #333;
+        text-decoration: underline;
+        letter-spacing: 1px;
       }
     }
   }
 }
 </style>
+
+
