@@ -87,6 +87,14 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
         </sub>
       </a>
     </td>
+    <td align="center">
+      <a href="#" title="Epaminondas">
+        <img src="https://avatars.githubusercontent.com/u/54701024?v=4" width="100px;" alt="Epaminondas"/><br>
+        <sub>
+          <b>Epaminondas</b>
+        </sub>
+      </a>
+    </td>
   </tr>
 </table>
 

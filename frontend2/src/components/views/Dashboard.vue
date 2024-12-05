@@ -3,16 +3,21 @@
     <!-- Navbar -->
     <nav class="navbar">
       <h1 class="navbar-title">SGM-AWS</h1>
-      <img
-        alt="Profile Image"
-        :src="
-          userData?.profile_pic
-            ? 'data:image/png;base64,' + userData.profile_pic
-            : 'https://thumbs.dreamstime.com/b/perfil-de-usu%C3%A1rio-do-vetor-avatar-padr%C3%A3o-179376714.jpg'
-        "
-        class="navbar-profile"
-        @click="navigateToMe"
-      />
+      <div class="nav-profile-box">
+        <img
+          alt="Profile Image"
+          :src="
+            userData?.profile_pic
+              ? 'data:image/png;base64,' + userData.profile_pic
+              : 'https://thumbs.dreamstime.com/b/perfil-de-usu%C3%A1rio-do-vetor-avatar-padr%C3%A3o-179376714.jpg'
+          "
+          class="navbar-profile"
+          @click="navigateToMe"
+        />
+        
+        <!-- Logout -->
+        <a-button class="session__logout" @click="handleLogout">Logout</a-button>
+      </div>
     </nav>
 
     <div class="dashboard-content">
@@ -37,9 +42,6 @@
           {{ userData.description ? userData.description : "Sem Descrição" }}
         </p>
       </div>
-
-      <!-- Logout -->
-      <a-button class="session__logout" @click="handleLogout">Logout</a-button>
     </div>
   </div>
 </template>
@@ -113,6 +115,10 @@ function navigateToMe() {
       text-align: left;
       padding: 0rem;
     }
+    .nav-profile-box{
+      display: flex;
+      align-items: center;
+    }
 
     .navbar-profile {
       width: 40px;
@@ -125,6 +131,23 @@ function navigateToMe() {
       &:hover {
         transform: scale(1.1);
         border-color: #5c5edc; /* Azul suave de hover */
+      }
+    }
+    .session__logout {
+      margin-left: 2rem;
+      background: rgba(92, 94, 220, 0.5);
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 0.1rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #5c5edc;
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(92, 94, 220, 0.5);
       }
     }
   }
@@ -175,24 +198,6 @@ function navigateToMe() {
 
       p {
         margin-bottom: 0.5rem;
-      }
-    }
-
-    .session__logout {
-      margin-left: 2rem;
-      background: rgba(92, 94, 220, 0.5);
-      color: white;
-      font-weight: bold;
-      border: none;
-      padding: 0.1rem 2rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background: #5c5edc;
-        transform: scale(1.05);
-        box-shadow: 0 4px 15px rgba(92, 94, 220, 0.5);
       }
     }
   }

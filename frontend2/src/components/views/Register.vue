@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 
 import AuthService from "../../services/AuthService";
 import { useRouter } from "vue-router";
