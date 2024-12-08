@@ -18,6 +18,19 @@ services:
     networks:
       - db-network
 
+  pg-admin:
+    container_name: pg-admin-server
+    image: dpage/pgadmin4:latest
+    ports:
+      - 5050:5050
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - db-network
+      - sgm-network
+
   prestart:
     container_name: sgm-app-prestart
     build:
@@ -46,28 +59,42 @@ services:
         condition: service_completed_successfully
     develop:
       watch:
-      - action: sync
-        path: ./backend/app
-        target: /src/app
-      - action: rebuild
-        path: ./backend/pyproject.toml
+        - action: sync
+          path: ./backend/app
+          target: /src/app
+        - action: rebuild
+          path: ./backend/pyproject.toml
     networks:
       - db-network
       - sgm-network
-  
-  frontend-proxy:
-    container_name: sgm-frontend-proxy
+
+  frontend-dev-server:
+    container_name: sgm-frontend-dev-server
+    
     build:
       context: ./frontend2
+      dockerfile: ./Dockerfile.dev
     networks:
       - sgm-network
     ports:
-      - 80:80
+      - 3000:3000
     depends_on:
       - backend
-    
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend2/
+          ignore:
+            - ./frontend2/package.json
+            - ./frontend2/package-lock.json
+            - ./frontend2/*nginx*
+          target: /src/
+        - action: rebuild
+          path: ./frontend2/package.json
+
 volumes:
   pgdata:
+
 
 networks:
   db-network:
