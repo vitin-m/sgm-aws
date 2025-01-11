@@ -15,12 +15,14 @@
       <!-- Search -->
       <div class="content__search-container">
         <a-select
+          size="large"
           style="width: 120px"
           :options="typeOptions"
           v-model:value="tableFilter.type"
         />
 
         <a-input-search
+          size="large"
           enter-button
           v-model:value="tableFilter.search"
           placeholder="Pesquise um item na sua biblioteca."

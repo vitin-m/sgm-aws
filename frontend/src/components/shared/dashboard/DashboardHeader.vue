@@ -5,6 +5,7 @@
 
     <!-- Menu -->
     <div class="nav-profile-box">
+      <!-- Profile -->
       <div class="my-profile" @click="handleOpenUserProfile">
         <img
           alt="Profile Image"
@@ -17,6 +18,9 @@
         />
         <span>Meu Perfil</span>
       </div>
+
+      <!-- Home -->
+      <a-button class="session__home" @click="handleOpenHome"> Home </a-button>
 
       <!-- Logout -->
       <a-button class="session__logout" @click="handleLogout">
@@ -85,13 +89,13 @@ function handleOpenHome() {
   .nav-profile-box {
     display: flex;
     align-items: center;
+
+    gap: 1rem;
   }
 
   .my-profile {
     display: flex;
     align-items: center;
-
-    margin-right: 1 rem;
 
     padding: 0.5rem 1rem;
     border-radius: 8px;
@@ -124,7 +128,6 @@ function handleOpenHome() {
   }
 
   .session__logout {
-    margin-left: 2rem;
     background: rgba(92, 94, 220, 0.5);
     color: white;
     font-weight: bold;
