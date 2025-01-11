@@ -14,9 +14,11 @@
           class="navbar-profile"
           @click="navigateToMe"
         />
-        
+
         <!-- Logout -->
-        <a-button class="session__logout" @click="handleLogout">Logout</a-button>
+        <a-button class="session__logout" @click="handleLogout">
+          Logout
+        </a-button>
       </div>
     </nav>
 
@@ -89,7 +91,11 @@ function navigateToMe() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #a8c0ff, #fbc2eb); /* Suavizando o gradiente */
+  background: linear-gradient(
+    135deg,
+    #a8c0ff,
+    #fbc2eb
+  ); /* Suavizando o gradiente */
   color: white;
 
   .navbar {
@@ -115,7 +121,7 @@ function navigateToMe() {
       text-align: left;
       padding: 0rem;
     }
-    .nav-profile-box{
+    .nav-profile-box {
       display: flex;
       align-items: center;
     }
@@ -153,12 +159,15 @@ function navigateToMe() {
   }
 
   .dashboard-content {
+    width: 100%;
+    height: 100%;
+
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
+
     padding: 80px 2rem; /* 80px para evitar sobreposição da navbar */
+    align-items: center;
+    justify-content: center;
 
     .session__user-data {
       background: rgba(255, 255, 255, 0.9); /* Transparente e suave */
@@ -203,4 +212,3 @@ function navigateToMe() {
   }
 }
 </style>
-
