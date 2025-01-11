@@ -48,7 +48,6 @@ class Settings(BaseSettings):
 
     DATABASE_URI: Annotated[str, AfterValidator(db_uri_validator)] = ""
 
-
 try:
     settings = Settings()  # type: ignore
 except ValidationError as e:
