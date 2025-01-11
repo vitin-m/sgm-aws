@@ -6,19 +6,43 @@
     <div class="dashboard-content">
       <!-- Usuário -->
       <a-spin v-if="!userData" size="large" />
-      <ProfileDataCard v-else :userData="userData" />
+
+      <template v-else>
+        <ProfileDataCard
+          v-if="modeManager.mode === 'default'"
+          :userData="userData"
+          @editProfile="modeManager.setEditProfileMode()"
+          @editPassword="modeManager.setEditPasswordMode()"
+        />
+
+        <EditUserPasswordCard
+          :userData="userData"
+          @cancel="modeManager.setDefaultMode()"
+          v-if="modeManager.mode === 'edit-password'"
+        />
+
+        <EditUserProfileCard
+          :userData="userData"
+          @cancel="modeManager.setDefaultMode()"
+          v-if="modeManager.mode === 'edit-profile'"
+        />
+      </template>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import ProfileDataCard from "../shared/user-profile/ProfileDataCard.vue";
 import DashboardHeader from "../shared/dashboard/DashboardHeader.vue";
+import ProfileDataCard from "../shared/user-profile/ProfileDataCard.vue";
+import EditUserPasswordCard from "../shared/user-profile/EditUserPasswordCard.vue";
+import EditUserProfileCard from "../shared/user-profile/EditUserProfileCard.vue";
 
 import { useStore } from "vuex";
-import { computed, onBeforeMount, onMounted } from "vue";
+import { computed, onBeforeMount, onMounted, reactive } from "vue";
 
 import IUserData from "../../interfaces/IUserData";
+
+type IModeType = "default" | "edit-profile" | "edit-password";
 
 onBeforeMount(async () => {
   await store.dispatch("Auth/fetchUserData");
@@ -33,6 +57,19 @@ const store = useStore();
 const userData = computed(
   (): IUserData | null => store.getters["Auth/getUserData"]
 );
+
+const modeManager = reactive({
+  mode: "default" as IModeType,
+  setEditProfileMode() {
+    this.mode = "edit-profile";
+  },
+  setEditPasswordMode() {
+    this.mode = "edit-password";
+  },
+  setDefaultMode() {
+    this.mode = "default";
+  },
+});
 </script>
 
 <style scoped lang="scss">

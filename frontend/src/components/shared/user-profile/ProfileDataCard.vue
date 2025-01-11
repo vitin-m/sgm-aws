@@ -23,10 +23,32 @@
       <strong>Data de Criação:</strong>
       {{ DataParse.UTCToLocal(userData.created_at, "DD/MM/YYYY") }}
     </p>
+
+    <!-- Options -->
+    <div class="profile__options">
+      <a-button
+        type="default"
+        :icon="h(EditOutlined)"
+        @click="$emit('editProfile')"
+      >
+        Editar Perfil
+      </a-button>
+
+      <a-button
+        type="default"
+        :icon="h(KeyOutlined)"
+        @click="$emit('editPassword')"
+      >
+        Alterar Senha
+      </a-button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { h } from "vue";
+import { EditOutlined, KeyOutlined } from "@ant-design/icons-vue";
+
 import IUserData from "@/interfaces/IUserData";
 import DataParse from "@/utils/DataParse";
 
@@ -35,6 +57,8 @@ interface Props {
 }
 
 defineProps<Props>();
+
+defineEmits(["editProfile", "editPassword"]);
 </script>
 
 <style scoped lang="scss">
@@ -52,6 +76,8 @@ defineProps<Props>();
 
   display: flex;
   flex-direction: column;
+
+  gap: 1rem;
   align-items: center;
   justify-content: center;
 
@@ -67,21 +93,26 @@ defineProps<Props>();
   }
 
   p {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0rem;
+  }
+
+  .profile__options {
+    display: flex;
+    gap: 1rem;
   }
 
   .profile-img {
     width: 135px;
     height: 135px;
     border-radius: 50%;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1 rem;
   }
 
   .user-title {
     font-size: 1.5rem;
     font-weight: bold;
     color: #5c5edc;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 }
 </style>

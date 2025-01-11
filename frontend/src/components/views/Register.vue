@@ -81,6 +81,7 @@ import AuthService from "../../services/AuthService";
 import { useRouter } from "vue-router";
 
 import { notification } from "ant-design-vue";
+import ParseImageToBase64 from "@/utils/ParseImageToBase64";
 
 const router = useRouter();
 
@@ -101,7 +102,7 @@ const handleSubmitRegister = async () => {
   let profileImageBase64 = null;
 
   if (formState.value.profileImage) {
-    profileImageBase64 = await validateAndConvertImage(
+    profileImageBase64 = await ParseImageToBase64(
       formState.value.profileImage[0].originFileObj as File,
       maxSizeInBytes,
       allowedFormats
@@ -147,46 +148,6 @@ const handleSubmitRegister = async () => {
 const handleSubmitRegisterFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
 };
-
-async function validateAndConvertImage(
-  file: File,
-  maxSizeInBytes: number,
-  allowedFormats: string[]
-): Promise<string> {
-  // Verifica o formato da imagem
-  const fileFormat = file.type.split("/")[1];
-  if (!allowedFormats.includes(fileFormat)) {
-    throw new Error(
-      `Formato de imagem não permitido. Formatos permitidos: ${allowedFormats.join(
-        ", "
-      )}`
-    );
-  }
-
-  // Verifica o tamanho da imagem
-  if (file.size > maxSizeInBytes) {
-    throw new Error(
-      `O tamanho da imagem não pode exceder ${maxSizeInBytes / 1024 / 1024} MB`
-    );
-  }
-
-  // Converte a imagem para Base64
-  const base64String = await convertToBase64(file);
-  return base64String;
-}
-
-function convertToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64String = reader.result as string;
-      const base64Data = base64String.split(",")[1]; // Remove o prefixo data:image/png;base64,
-      resolve(base64Data);
-    };
-    reader.onerror = (error) => reject(error);
-  });
-}
 </script>
 
 <style scoped lang="scss">
@@ -281,5 +242,3 @@ function convertToBase64(file: File): Promise<string> {
   }
 }
 </style>
-
-
