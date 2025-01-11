@@ -36,7 +36,8 @@
     "types": [
       "node",
       "vuex"
-    ]
+    ],
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src/**/*.ts",

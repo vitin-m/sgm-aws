@@ -1,3 +1,4 @@
+import AuthService from "@/services/AuthService";
 import { RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 
 async function routerValidations(
@@ -29,6 +30,14 @@ async function routerValidations(
     const token = localStorage.getItem("__sgm-aws");
 
     if (!token) {
+      return next({ name: "login" });
+    }
+
+    try {
+      const response = await AuthService.getUserData();
+      console.log("ROUTER VALIDATION | Get User Data", response);
+    } catch (error) {
+      localStorage.removeItem("__sgm-aws");
       return next({ name: "login" });
     }
   }

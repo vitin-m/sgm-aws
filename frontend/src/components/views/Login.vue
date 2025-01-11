@@ -141,7 +141,7 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
   height: 100vh;
   background: linear-gradient(135deg, #a8c0ff, #fbc2eb);
   padding: 1rem;
-  
+
   .session__form-content {
     width: 100%;
     max-width: 400px;
@@ -151,6 +151,8 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
     padding: 2.5rem;
     transform: translateY(10px);
     animation: fadeIn 1s ease forwards;
+
+    position: relative; /* Necessário para que o position: absolute do register-link funcione */
 
     @keyframes fadeIn {
       from {
@@ -224,10 +226,6 @@ const handleSubmitLoginFailed = (errorInfo: any) => {
         letter-spacing: 1px;
       }
     }
-
-    position: relative; /* Necessário para que o position: absolute do register-link funcione */
   }
 }
 </style>
-
-
