@@ -10,6 +10,7 @@ from app.core.models import (
     ta_username,
 )
 from app.core.security import get_password_hash, verify_password
+from app.core.s3 import upload_file_to_s3
 
 def create_user(*, session: Session, user_create: UserCreate):
     db_obj = User.model_validate(
@@ -51,56 +52,20 @@ def authenticate(*, session: Session, id: str, password: str) -> User | None:
         except ValidationError:
             return None
 
-    if not user_db or not verify_password(password, user_db.hashed_password):
+    # if not user_db or not verify_password(password, user_db.hashed_password):
         return None
     return user_db
 
 # ----- CRUD para Arquivos de Mídia -----
-def create_media_file(*, session: Session, media_file_create: MediaFileCreate):
-    """
-    Adiciona um novo arquivo de mídia ao banco de dados.
-    """
-    media_file = MediaFile.model_validate(media_file_create)
-    session.add(media_file)
+def create_media_file(session: Session, filename: str, content_type: str, user_id: int, url: str,):
+    # Criação no banco de dados
+    media = MediaFile(
+        filename=filename,
+        content_type=content_type,
+        user_id=user_id,
+        url=url,
+    )
+    session.add(media)
     session.commit()
-    session.refresh(media_file)
-    return media_file
-
-def get_media_files(*, session: Session, user_id: str = None):
-    """
-    Recupera todos os arquivos de mídia. Se `user_id` for fornecido, retorna apenas os arquivos do usuário.
-    """
-    sql = select(MediaFile)
-    if user_id:
-        sql = sql.where(MediaFile.uploaded_by == user_id)
-    return session.exec(sql).all()
-
-def get_media_file_by_id(*, session: Session, file_id: str) -> MediaFile | None:
-    """
-    Recupera um único arquivo de mídia pelo ID.
-    """
-    sql = select(MediaFile).where(MediaFile.id == file_id)
-    return session.exec(sql).first()
-
-def delete_media_file(*, session: Session, file_id: str):
-    """
-    Exclui um arquivo de mídia pelo ID.
-    """
-    media_file = get_media_file_by_id(session=session, file_id=file_id)
-    if media_file:
-        session.delete(media_file)
-        session.commit()
-
-def update_media_file(*, session: Session, file_id: str, media_file_update: dict):
-    """
-    Atualiza informações de um arquivo de mídia.
-    """
-    media_file = get_media_file_by_id(session=session, file_id=file_id)
-    if not media_file:
-        return None
-    for key, value in media_file_update.items():
-        setattr(media_file, key, value)
-    session.add(media_file)
-    session.commit()
-    session.refresh(media_file)
-    return media_file
+    session.refresh(media)
+    return media

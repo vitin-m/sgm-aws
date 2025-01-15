@@ -40,13 +40,10 @@ class Settings(BaseSettings):
     SECRET_KEY: str = secrets.token_urlsafe(32)
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7
 
-    POSTGRES_HOST: str
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_PORT: int
-    POSTGRES_DB: str
-
-    DATABASE_URI: Annotated[str, AfterValidator(db_uri_validator)] = ""
+    AWS_ACCESS_KEY_ID: str
+    AWS_SECRET_ACCESS_KEY: str
+    AWS_S3_BUCKET_NAME: str
+    AWS_REGION: str
 
 try:
     settings = Settings()  # type: ignore
