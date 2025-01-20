@@ -10,52 +10,82 @@ from mutagen import File as MutagenFile
 import uuid
 import os
 import io
+import datetime
 
 router = APIRouter()
 s3_client = S3Client()
 
 ALLOWED_TYPES = {
     "image": ["image/jpeg", "image/png", "image/webp"],
-    "audio": ["audio/mpeg", "audio/wav", "audio/mp3"],
-    "video": ["video/mp4", "video/webm", "video/mkv"],
+    "audio": ["audio/mpeg", "audio/wav"],
+    "video": ["video/mp4", "video/webm"],
 }
 
-def extract_image_exif(file: io.BytesIO):
-    try:
-        image = Image.open(file)
-        exif_data = image._getexif()  # Obtenha os metadados EXIF
-        if not exif_data:
-            return None
-        return {
-            key: value for key, value in exif_data.items()
-        }
-    except Exception as e:
-        return {"error": str(e)}
+THUMBNAIL_SIZE = (150, 150)  # Tamanho da miniatura em pixels
 
-def extract_video_metadata(file_path: str):
+
+def generate_thumbnail(image_data: io.BytesIO):
+    """Gera uma miniatura para imagens."""
+    try:
+        image = Image.open(image_data)
+        image.thumbnail(THUMBNAIL_SIZE)
+        thumbnail_data = io.BytesIO()
+        image.save(thumbnail_data, format=image.format)
+        thumbnail_data.seek(0)
+        return thumbnail_data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao gerar miniatura: {str(e)}")
+
+
+def extract_image_exif(image_data: io.BytesIO):
+    """Extrai os dados EXIF de uma imagem."""
+    try:
+        image = Image.open(image_data)
+        exif_data = image._getexif() or {}
+        exif_metadata = {
+            "ExifVersion": exif_data.get(0x9000),
+            "DateTime": exif_data.get(0x9003),
+            "Make": exif_data.get(0x010F),
+            "Model": exif_data.get(0x0110),
+            "GPS": exif_data.get(0x0002),  # Exemplo de dados de localização GPS (se presentes)
+        }
+        return exif_metadata
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao extrair EXIF: {str(e)}")
+
+
+def extract_video_metadata(file_path):
+    """Extrai os metadados de um vídeo."""
     try:
         parser = createParser(file_path)
-        if not parser:
-            return {"error": "Could not parse file."}
         metadata = extractMetadata(parser)
-        if not metadata:
-            return None
-        return {
-            key: metadata.get(key) for key in metadata.exportPlaintext()
+        video_metadata = {
+            "duration": metadata.get('duration'),
+            "resolution": f"{metadata.get('width')}x{metadata.get('height')}",
+            "frame_rate": metadata.get('frame_rate'),
+            "video_codec": metadata.get('codec'),
+            "audio_codec": metadata.get('audio_codec'),
+            "bit_rate": metadata.get('bit_rate'),
         }
+        return video_metadata
     except Exception as e:
-        return {"error": str(e)}
+        raise HTTPException(status_code=500, detail=f"Erro ao extrair metadados do vídeo: {str(e)}")
 
-def extract_audio_metadata(file_path: str):
+
+def extract_audio_metadata(file_path):
+    """Extrai os metadados de um arquivo de áudio."""
     try:
-        audio_file = MutagenFile(file_path)
-        if not audio_file or not audio_file.tags:
-            return None
-        return {
-            tag: str(value) for tag, value in audio_file.tags.items()
+        audio = MutagenFile(file_path)
+        audio_metadata = {
+            "duration": audio.info.length,
+            "bit_rate": audio.info.bitrate,
+            "sample_rate": audio.info.sample_rate,
+            "channels": audio.info.channels,
         }
+        return audio_metadata
     except Exception as e:
-        return {"error": str(e)}
+        raise HTTPException(status_code=500, detail=f"Erro ao extrair metadados do áudio: {str(e)}")
+
 
 @router.post("/upload")
 async def upload_file(
@@ -84,27 +114,53 @@ async def upload_file(
     # Monta a URL pública do arquivo
     file_url = f"https://meu-bucket-s3.s3.meu-regiao.amazonaws.com/{filename}"
 
-    # Verifica e extrai metadados conforme o tipo de arquivo
+    # Propriedades e metadados específicos conforme o tipo de arquivo
+    file_properties = {
+        "filename": file.filename,
+        "size": file.size,
+        "upload_date": datetime.datetime.utcnow().isoformat(),
+        "mime_type": file.content_type,
+    }
+
     metadata = None
+    thumbnail_url = None
+
     if file_type == "image":
-        file.file.seek(0)  # Reset o ponteiro para o início
+        file.file.seek(0)
         metadata = extract_image_exif(io.BytesIO(file.file.read()))
+
+        # Gerar miniatura
+        file.file.seek(0)  # Resetar o ponteiro
+        thumbnail_data = generate_thumbnail(io.BytesIO(file.file.read()))
+        thumbnail_filename = f"thumbnail/user_{current_user.id}/{uuid.uuid4().hex}_thumbnail_{file.filename}"
+        try:
+            s3_client.upload_fileobj(
+                thumbnail_data,
+                "meu-bucket-s3",
+                thumbnail_filename,
+                ExtraArgs={"ACL": "public-read"},
+            )
+            thumbnail_url = f"https://meu-bucket-s3.s3.meu-regiao.amazonaws.com/{thumbnail_filename}"
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Erro ao fazer upload da miniatura: {str(e)}")
+
     elif file_type == "video":
         temp_file_path = f"/tmp/{uuid.uuid4().hex}_{file.filename}"
         with open(temp_file_path, "wb") as temp_file:
             file.file.seek(0)
             temp_file.write(file.file.read())
         metadata = extract_video_metadata(temp_file_path)
-        os.remove(temp_file_path)  # Remove o arquivo temporário após leitura
+        os.remove(temp_file_path)  # Remover o arquivo temporário após leitura
+
     elif file_type == "audio":
         temp_file_path = f"/tmp/{uuid.uuid4().hex}_{file.filename}"
         with open(temp_file_path, "wb") as temp_file:
             file.file.seek(0)
             temp_file.write(file.file.read())
         metadata = extract_audio_metadata(temp_file_path)
-        os.remove(temp_file_path)  # Remove o arquivo temporário após leitura
+        os.remove(temp_file_path)  # Remover o arquivo temporário após leitura
 
-    # Salva os metadados no banco de dados
+    # Salvar os metadados no banco de dados
     media_file = create_media_file(
         session=session,
         filename=file.filename,
@@ -113,9 +169,11 @@ async def upload_file(
         url=file_url,
         file_type=file_type,
         file_extension=file.filename.split(".")[-1].lower(),
+        properties=file_properties,  # Salvar propriedades gerais
     )
 
     return {
         "url": media_file.url,
-        "metadata": metadata,  # Retorna os metadados extraídos, se existirem
+        "metadata": metadata,
+        "thumbnail_url": thumbnail_url,  # Retornar a URL da miniatura para imagens
     }
