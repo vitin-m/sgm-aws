@@ -16,8 +16,8 @@ s3_client = S3Client()
 
 ALLOWED_TYPES = {
     "image": ["image/jpeg", "image/png", "image/webp"],
-    "audio": ["audio/mpeg", "audio/wav"],
-    "video": ["video/mp4", "video/webm"],
+    "audio": ["audio/mpeg", "audio/wav", "audio/mp3"],
+    "video": ["video/mp4", "video/webm", "video/mkv"],
 }
 
 def extract_image_exif(file: io.BytesIO):
