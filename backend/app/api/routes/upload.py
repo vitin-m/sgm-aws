@@ -6,6 +6,7 @@ from app.core.deps import SessionDep, CurrentUser
 from PIL import Image
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
+from mutagen import File as MutagenFile
 import uuid
 import os
 import io
@@ -45,6 +46,17 @@ def extract_video_metadata(file_path: str):
     except Exception as e:
         return {"error": str(e)}
 
+def extract_audio_metadata(file_path: str):
+    try:
+        audio_file = MutagenFile(file_path)
+        if not audio_file or not audio_file.tags:
+            return None
+        return {
+            tag: str(value) for tag, value in audio_file.tags.items()
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
 @router.post("/upload")
 async def upload_file(
     file: UploadFile = File(...),
@@ -72,7 +84,7 @@ async def upload_file(
     # Monta a URL pública do arquivo
     file_url = f"https://meu-bucket-s3.s3.meu-regiao.amazonaws.com/{filename}"
 
-    # Verifica e extrai metadados caso seja imagem ou vídeo
+    # Verifica e extrai metadados conforme o tipo de arquivo
     metadata = None
     if file_type == "image":
         file.file.seek(0)  # Reset o ponteiro para o início
@@ -83,6 +95,13 @@ async def upload_file(
             file.file.seek(0)
             temp_file.write(file.file.read())
         metadata = extract_video_metadata(temp_file_path)
+        os.remove(temp_file_path)  # Remove o arquivo temporário após leitura
+    elif file_type == "audio":
+        temp_file_path = f"/tmp/{uuid.uuid4().hex}_{file.filename}"
+        with open(temp_file_path, "wb") as temp_file:
+            file.file.seek(0)
+            temp_file.write(file.file.read())
+        metadata = extract_audio_metadata(temp_file_path)
         os.remove(temp_file_path)  # Remove o arquivo temporário após leitura
 
     # Salva os metadados no banco de dados
