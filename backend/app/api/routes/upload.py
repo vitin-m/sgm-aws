@@ -3,7 +3,12 @@ from app.core.s3 import S3Client
 from app.core.crud import create_media_file
 from app.core.models import MediaFileCreate
 from app.core.deps import SessionDep, CurrentUser
+from PIL import Image
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
 import uuid
+import os
+import io
 
 router = APIRouter()
 s3_client = S3Client()
@@ -13,6 +18,32 @@ ALLOWED_TYPES = {
     "audio": ["audio/mpeg", "audio/wav"],
     "video": ["video/mp4", "video/webm"],
 }
+
+def extract_image_exif(file: io.BytesIO):
+    try:
+        image = Image.open(file)
+        exif_data = image._getexif()  # Obtenha os metadados EXIF
+        if not exif_data:
+            return None
+        return {
+            key: value for key, value in exif_data.items()
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+def extract_video_metadata(file_path: str):
+    try:
+        parser = createParser(file_path)
+        if not parser:
+            return {"error": "Could not parse file."}
+        metadata = extractMetadata(parser)
+        if not metadata:
+            return None
+        return {
+            key: metadata.get(key) for key in metadata.exportPlaintext()
+        }
+    except Exception as e:
+        return {"error": str(e)}
 
 @router.post("/upload")
 async def upload_file(
@@ -41,6 +72,19 @@ async def upload_file(
     # Monta a URL pública do arquivo
     file_url = f"https://meu-bucket-s3.s3.meu-regiao.amazonaws.com/{filename}"
 
+    # Verifica e extrai metadados caso seja imagem ou vídeo
+    metadata = None
+    if file_type == "image":
+        file.file.seek(0)  # Reset o ponteiro para o início
+        metadata = extract_image_exif(io.BytesIO(file.file.read()))
+    elif file_type == "video":
+        temp_file_path = f"/tmp/{uuid.uuid4().hex}_{file.filename}"
+        with open(temp_file_path, "wb") as temp_file:
+            file.file.seek(0)
+            temp_file.write(file.file.read())
+        metadata = extract_video_metadata(temp_file_path)
+        os.remove(temp_file_path)  # Remove o arquivo temporário após leitura
+
     # Salva os metadados no banco de dados
     media_file = create_media_file(
         session=session,
@@ -52,4 +96,7 @@ async def upload_file(
         file_extension=file.filename.split(".")[-1].lower(),
     )
 
-    return {"url": media_file.url}
+    return {
+        "url": media_file.url,
+        "metadata": metadata,  # Retorna os metadados extraídos, se existirem
+    }
