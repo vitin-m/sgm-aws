@@ -17,9 +17,9 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Criar tela de login
 - [x] Criar tela de cadastro de usuário
 - [x] Criar tela de visualizar perfil do usuário
-- [ ] Criar tela de editar perfil do usuário
-- [ ] Criar dashboard com listagem de arquivos
-- [ ] Criar sistema de upload e download de arquivos
+- [x] Criar tela de editar perfil do usuário
+- [x] Criar dashboard com listagem de arquivos
+- [x] Criar sistema de upload e download de arquivos
 
 ## 💻 Feito Com:
 
